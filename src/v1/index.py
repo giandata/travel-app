@@ -7,6 +7,7 @@ from lists import *
 import json
 import pandas as pd
 import pydantic
+import hmac
 
 from langchain_core.prompts.chat import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -15,7 +16,36 @@ from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
 # The following line allows using absolute imports relative to "src"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the password is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
+
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
+
+# Main Streamlit app starts here
+
 def run():
+    
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the genius about your dream travel, he will plan it for you!")
     
