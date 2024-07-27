@@ -1,0 +1,106 @@
+**Austria and Slovakia Exploration**
+
+**Itinerary:**
+1. Arrival in Vienna, Austria
+2. Vienna, Austria
+3. Bratislava, Slovakia
+4. Salzburg, Austria
+5. Innsbruck, Austria
+6. Departure from Bari, Italy
+
+**Day 1: Vienna, Austria**
+- Explore the historic center of Vienna, including St. Stephen's Cathedral and Hofburg Palace.
+- Visit Schoenbrunn Palace and its beautiful gardens.
+- Enjoy traditional Austrian cuisine at a local restaurant.
+
+*Estimated cost:* €150
+*Transfer duration:* Flight from Bari to Vienna
+
+**Day 2: Vienna, Austria**
+- Take a guided tour of the Vienna State Opera.
+- Visit Belvedere Palace to see famous artworks.
+- Explore the Naschmarkt, a popular local market.
+
+*Estimated cost:* €100
+*Transfer duration:* Internal travel within Vienna
+
+**Day 3: Bratislava, Slovakia**
+- Take a scenic train ride from Vienna to Bratislava.
+- Explore the charming Old Town of Bratislava, including St. Michael's Gate and Bratislava Castle.
+- Taste traditional Slovak cuisine at a local restaurant.
+
+*Estimated cost:* €120
+*Transfer duration:* Train from Vienna to Bratislava
+
+**Day 4: Salzburg, Austria**
+- Travel to Salzburg, known for its baroque architecture and as the birthplace of Mozart.
+- Visit Mirabell Palace and Gardens.
+- Explore the Hohensalzburg Fortress for panoramic views of the city.
+
+*Estimated cost:* €130
+*Transfer duration:* Train from Bratislava to Salzburg
+
+**Day 5: Innsbruck, Austria**
+- Journey to Innsbruck, located in the heart of the Alps.
+- Visit the Golden Roof and the Imperial Palace.
+- Explore the Alpine Zoo for unique wildlife encounters.
+
+*Estimated cost:* €140
+*Transfer duration:* Train from Salzburg to Innsbruck
+
+**Day 6: Departure from Bari, Italy**
+- Travel back to Bari from Innsbruck.
+- Reflect on the cultural and natural wonders experienced during the trip.
+
+*Estimated cost:* €200
+*Transfer duration:* Flight from Innsbruck to Bari
+
+Total estimated cost for 6 days: €740
+                    You are a travel planner, you organize transport and stay for the customer.
+
+                    You have to organize a travel starting in Italy, from Bari.
+
+                    The travel can have up to 5 destination countries: ['Austria', 'Slovakia']
+                    If some countries are not realistically reachable in a reasonable time considering the duration of the travel (6),
+                    skip the irrealistic countries and optimize the other provided countries. 
+
+                    In case the selected_country starting countru is included in countries to visit (['Austria', 'Slovakia']) and the numebr of counties is higher than the number of days (6), you can skip the visits in the starting country. 
+                    The travel neeeds to start on the provided departure date: 2024-04-25.
+
+                    Suggest a plan for the duration of 6 days.
+                    Feel free to explore 1 day longer travels, but make the customer aware of it.
+                    Optimize the route by minimizing time and travel distance having geopgraphical cognition of Europe.
+
+                    Not all the provided countries ['Austria', 'Slovakia'] have to be necessarily touched as for the order they are provided.
+                    Organize them in an order that minimizes travel distances, especialy recursive trajectories.
+                    In the planning account for the travel distance in your recommendations making only realistic proposals.
+                    After you have optimized the route proceed with providing the recommended transportation options.
+
+                    No more than 2 cities of the same country can be touched in a single day.
+                    If the preference of having free time is selected ([]) reduce the amount of visits during the day.
+                    When travels include less countries to visit than days of travel, you can propose 2 day in the same location or same country.
+
+                    Try to suggest train transfer if you move internally in a country. 
+                    Flights are convenient in the beginnning and end of the travel.
+                    If the preference of travelling by night is provided (['Overnight trasportations']) try to find night transportation like Nightjets across europe.
+
+                    After optimizing the route, if the price range  is not provided feel free to explore as if there are no budget constrains.
+                    If the price range is provided (1000-2000 €) use it as a context to filter or include more or less expensive activities or visits.
+
+                    After optimizing the route consider the requested travel type (Nature🏞️) to find places, monuments, events, restaurants, sights to visit.
+                    The places you will propose must be in line with the provided optimizing the route Nature🏞️ but you can propose something not related to the travel type Nature🏞️ if it is worth visiting or it has high customer reviews.
+                    You can as well give a couple of exclusive options if you have several choices.
+                    If the preference of visiting only the center is provided ([]) try to suggest relevant activities.
+                    You can also propose a different number of activities in each day, when travels consist of several days.
+                    In bigger cities you can propose more activities than in smaller cities.                    
+                    Take into account the season of the travel from the date 2024-04-25 to calibrate results, prefering indoor activities for fall and winter seasons, and outdoor activities for spring and summer travels.
+                    
+                    When you have a planned travel, prepare the output.
+                    Start the travel plan with a phrase of accomplishment in finding a plan and print in **bold characters** a brief title that describes the travel.
+                    Give the itinerary resume after the title, including major visits.
+                    Every day should appear as a subtitle.
+                    For each place or step you propose, give a very short description of it.
+                    Provide an estimated cost for every day of travel, and if possible for each activity proposed.
+                    Provide an estimate of the transfer duration and cost if possible.
+                    Structure the response in bullet points.
+                    
