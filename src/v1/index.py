@@ -15,8 +15,6 @@ from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
 # The following line allows using absolute imports relative to "src"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-from src.conf import env
-
 def run():
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the genius about your dream travel, he will plan it for you!")
@@ -113,7 +111,7 @@ def run():
     pressed = st.button(label="Submit", key="Submit", disabled=disabled)
     if pressed:
       loading = st.info( f"The genius is looking for a **{travel_type}** travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
-      client = OpenAI(api_key=env.OPENAPI_API_KEY)
+      client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
       response = client.chat.completions.create(
         model="gpt-4o-mini",
         #response_format={ "type": "json_object" },
@@ -188,7 +186,7 @@ def run():
         },
       }
 
-      model = ChatOpenAI(api_key=env.OPENAPI_API_KEY)
+      model = ChatOpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
       chain = model.bind( functions=[extractionFunctionSchema],
       function_call= {"name": "extractor"})
       
