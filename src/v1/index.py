@@ -183,10 +183,30 @@ def run():
       
       response = response.choices[0].message.content
 
+      #todo ottimizzare
+      image_response = client.images.generate(
+        model="dall-e-3",
+        prompt=f"cinematic {travel_type} travel picture in {selected_countries[0]}",
+        size="1024x1024",
+        quality="standard",
+        n=1,
+      )
+
+      image_response = image_response.data[0].url
+
+      def display_image_from_url(image_response):
+        if image_response:
+          try:
+            response = requests.get(image_response)
+            image = Image.open(BytesIO(response.content))
+            st.image(image, caption='Generated Image')
+          except Exception as e:
+            st.error(f"Error displaying image: {e}")
 
       loading.empty()
       st.balloons()
       st.success('Travel planned!',icon="✈️")
+
 
       #full response
       #st.markdown(response)      
@@ -217,13 +237,15 @@ def run():
       # Display itinerary summary
       st.markdown("### Itinerary Summary")
       st.markdown(title_and_summary)
+      display_image_from_url(image_response)
 
-      # Display each day’s details in a single expander
-      for day in days:
-        st.expander(day.split('\n')[0], expanded=False).markdown(day)
+      with st.container(border=True):
+        # Display each day’s details in a single expander
+        for day in days:
+          st.expander(day.split('\n')[0], expanded=False).markdown(day)
 
-      # Display Overall Trip Summary
-      st.expander("Overall Trip Summary").markdown(overall_summary)
+        # Display Overall Trip Summary
+        st.expander("Overall Trip Summary").markdown(overall_summary)
 
       st.download_button(data=response,label="Download itinerary")
 
