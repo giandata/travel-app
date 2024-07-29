@@ -231,19 +231,18 @@ def run():
         title_and_summary = "Title and Itinerary Summary not found."
 
       # Extract day details and costs
-      day_pattern = re.compile(r"(Day \d+:.*?)(?=Day \d+:|Travel Summary:|$)", re.DOTALL)
+      day_pattern = re.compile(r"(Day \d+:.*?)(?=Day \d+:|Travel Summary|$)", re.DOTALL)
       days = day_pattern.findall(response)
 
       # Extract the overall summary
-      overall_summary_pattern = re.compile(r"Travel Summary([\s\S]*)$", re.DOTALL)
+      overall_summary_pattern = re.compile(r"Travel Summary(.*)$", re.DOTALL)
       overall_summary_match = overall_summary_pattern.search(response)
       if overall_summary_match:
           overall_summary = overall_summary_match.group(0).strip()
       else:
-          overall_summary = "Overall Trip Summary not found."
+          overall_summary = "Itinerary Summary not found."
 
       # Display itinerary summary
-      st.markdown("### Itinerary Summary")
       st.markdown(title_and_summary)
       if picture:
         display_image_from_url(image_response)
@@ -251,7 +250,7 @@ def run():
       # Display each day’s details in a single expander
       tab_names = [day.split(':')[0] for day in days]
       if overall_summary_match:
-        tab_names.append("Overall Trip Summary")
+        tab_names.append("Itinerary Summary")
       tabs = st.tabs(tab_names)
       # Loop through tabs and generate content
       for i, tab in enumerate(tabs[:-1]):
