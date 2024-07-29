@@ -2,13 +2,11 @@ import streamlit as st
 import requests
 from datetime import datetime, timedelta
 from openai import OpenAI
-import openai
 import os
 import sys
 from lists import *
 import json
 import pandas as pd
-import pydantic
 import hmac
 
 #from langchain_core.prompts.chat import ChatPromptTemplate
@@ -48,6 +46,8 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
+
+st.cache_data.clear()
 
 def run():
     
@@ -146,6 +146,12 @@ def run():
                     help="Specify the travel budget to organize a travel that best suits you"
                 )
 
+                picture = st.checkbox(
+                  label='Generate AI picture',
+                  value=False,
+                  key='picbox'
+                )
+
         disabled = selected_country is None or selected_countries is None or departure is None or travel_type is None 
 
         import pickle
@@ -164,7 +170,9 @@ def run():
             from prompt_v1 import script
             content = script
 
-              
+    with st.expander('Preferences'):
+      st.write(preferences)
+
     pressed = st.button(label="Submit", key="Submit", disabled=disabled)
     if pressed:
       loading = st.info( f"The Engine is preparing a **{travel_type}** travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
@@ -184,32 +192,32 @@ def run():
       response = response.choices[0].message.content
 
       #todo ottimizzare
-      image_response = client.images.generate(
-        model="dall-e-3",
-        prompt=f"cinematic {travel_type} travel picture in {selected_countries[0]}",
-        size="1024x1024",
-        quality="standard",
-        n=1,
-      )
+      if picture:
+        image_response = client.images.generate(
+          model="dall-e-3",
+          prompt=f"cinematic {travel_type} travel picture in {selected_countries[0]}",
+          size="1024x1024",
+          quality="standard",
+          n=1,
+        )
 
-      image_response = image_response.data[0].url
+      if picture:
 
-      def display_image_from_url(image_response):
-        if image_response:
-          try:
-            response = requests.get(image_response)
-            image = Image.open(BytesIO(response.content))
-            st.image(image, caption='Generated Image')
-          except Exception as e:
-            st.error(f"Error displaying image: {e}")
+        image_response = image_response.data[0].url
+
+      if picture:
+        def display_image_from_url(image_response):
+          if image_response:
+            try:
+              response = requests.get(image_response)
+              image = Image.open(BytesIO(response.content))
+              st.image(image, caption='Generated Image')
+            except Exception as e:
+              st.error(f"Error displaying image: {e}")
 
       loading.empty()
       st.balloons()
-      st.success('Travel planned!',icon="✈️")
-
-
-      #full response
-      #st.markdown(response)      
+      st.success('Travel planned!',icon="✈️") 
 
      # Split the response into sections
       import re
@@ -223,7 +231,7 @@ def run():
         title_and_summary = "Title and Itinerary Summary not found."
 
       # Extract day details and costs
-      day_pattern = re.compile(r"(Day \d+.*?)(?=Day \d+|Overall Trip Summary:)", re.DOTALL)
+      day_pattern = re.compile(r"(Day \d+:.*?)(?=Day \d+:|Travel Summary:|$)", re.DOTALL)
       days = day_pattern.findall(response)
 
       # Extract the overall summary
@@ -237,17 +245,22 @@ def run():
       # Display itinerary summary
       st.markdown("### Itinerary Summary")
       st.markdown(title_and_summary)
-      display_image_from_url(image_response)
+      if picture:
+        display_image_from_url(image_response)
 
-      with st.container(border=True):
-        # Display each day’s details in a single expander
-        for day in days:
-          st.expander(day.split('\n')[0], expanded=False).markdown(day)
+      # Display each day’s details in a single expander
+      for day in days:
+        st.expander(day.split('\n')[0], expanded=False).markdown(day)
 
-        # Display Overall Trip Summary
-        st.expander("Overall Trip Summary").markdown(overall_summary)
+      # Display Overall Trip Summary
+      st.expander("Overall Trip Summary").markdown(overall_summary)
 
       st.download_button(data=response,label="Download itinerary")
+
+      #full response
+      st.markdown(response)  
+
+      st.cache_data.clear()   
 
 
       ##second part of app
