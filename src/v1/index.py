@@ -249,16 +249,27 @@ def run():
         display_image_from_url(image_response)
 
       # Display each day’s details in a single expander
-      for day in days:
-        st.expander(day.split('\n')[0], expanded=False).markdown(day)
+      tab_names = [day.split(':')[0] for day in days]
+      if overall_summary_match:
+        tab_names.append("Overall Trip Summary")
+      tabs = st.tabs(tab_names)
+      # Loop through tabs and generate content
+      for i, tab in enumerate(tabs[:-1]):
+        with tab:
+           st.markdown(days[i])
+        with tabs[-1]:
+           st.markdown(overall_summary)
+      
+      #for day in days:
+        #st.expander(day.split('\n')[0], expanded=False).markdown(day)
 
       # Display Overall Trip Summary
-      st.expander("Overall Trip Summary").markdown(overall_summary)
+      #st.expander("Overall Trip Summary").markdown(overall_summary)
 
       st.download_button(data=response,label="Download itinerary")
 
       #full response
-      st.markdown(response)  
+      #st.markdown(response)  
 
       st.cache_data.clear()   
 
