@@ -48,12 +48,11 @@ if not check_password():
 # Main Streamlit app starts here
 
 
-
 def run():
     st.cache_data.clear()
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
-    
+
     with st.container(border=True):
         
         st.subheader("Where do you want to travel?")
@@ -131,32 +130,9 @@ def run():
         col1,col2 =st.columns(2)
         with col1:
             st.write('Select the activities to be searched:')
-            travel_type = []
-
-            toggles = {"Historical and cultural":False,
-             "Nature and landscapes":False,
-             "Social and local events":False,
-             "Food Lover":False,
-             "Relax and wellness":False}
-            
-            if 'toggle_states' not in st.session_state:
-               st.session_state.toggle_states = toggles
-
-
-            def update_toggle(key):
-               st.session_state.toggle_states[key] = not st.session_state.toggle_states[key]
-
-            for key in toggles:
-              st.toggle(
-            label= key,
-            value=st.session_state.toggle_states[key],
-            key=key,
-            label_visibility="visible",
-            on_change = update_toggle,
-            args=(key,))
-            
-            travel_type = [key for key, value in st.session_state.toggle_states.items() if value]
-            
+            from src.v1 import preferences
+            travel_type = preferences.render_toggle()
+         
         with col2:
             with st.expander("Advanced settings"):
                 price_range =[]
@@ -174,28 +150,13 @@ def run():
 
         disabled = selected_country is None or selected_countries is None or departure is None or travel_type is None 
 
-        import pickle
-        preferences = {
-            "budget": price_range,
-            "travel_type" : travel_type,
-            "departure_date": str(date),
-            "departure_city":departure,
-            "destination_countries": selected_countries,
-            "trip_duration": duration
-        }
-        with open('preferences.pkl', 'wb') as f:
-          pickle.dump(preferences, f)
-
         if disabled == False:
-            from prompt_v1 import script
-            content = script
-
-    with st.expander('Preferences'):
-      st.write(preferences)
+            from prompt_v1 import fill_script
+            content = fill_script(selected_country,departure,selected_countries,duration,date,night_jets,price_range,travel_type)
 
     pressed = st.button(label="Submit", key="Submit", disabled=disabled)
     if pressed:
-      loading = st.info( f"The Engine is preparing a travel plan starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
+      loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
       
       client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
       response = client.chat.completions.create(

@@ -1,23 +1,12 @@
-import pickle
-
-# Load the preferences dictionary from the file
-with open('preferences.pkl', 'rb') as f:
-    preferences = pickle.load(f)
-
-# Extract variables from preferences
-selected_country = preferences.get('selected_country', 'Not provided')
-departure = preferences.get('departure_date', 'Not provided')
-selected_countries = ', '.join(preferences.get('destination_countries', []))
-duration = preferences.get('trip_duration', 'Not provided')
-date = preferences.get('departure_date', 'Not provided')
-prefe1 = preferences.get('prefe1', 'Not provided')
-prefe2 = preferences.get('prefe2', 'Not provided')
-night_jets = preferences.get('night_jets', 'Not provided')
-price_range = preferences.get('price_range', 'Not provided')
-travel_type = preferences.get('travel_type', 'Not provided')
-prefe3 = preferences.get('prefe3', 'Not provided')
-
-script = f"""
+def fill_script(selected_country,
+                departure,
+                selected_countries
+                ,duration,
+                date,night_jets,
+                price_range,
+                travel_type):
+    travel_type = ', '.join(travel_type)
+    return f"""
 You are a travel planner, you organize transport and stay for the customer.
 
 You have to organize a travel starting in {selected_country}, from {departure}.
@@ -64,7 +53,7 @@ You have to organize a travel starting in {selected_country}, from {departure}.
  Start the travel plan with a section called itinerary summary and write a phrase of accomplishment in finding a plan and create a fancy brief title that describes the travel, with a couple of emojis.
  Give the itinerary resume after the title.
  Every day of the plan has to appear as a section, and add 1 emoji per day.
- For each place or step you propose, give a description of it. Do not be too verbose, but one phrase per activity is fine.You can provide some details about accomodation, traditional meals, transportation or activities.
+ For each place or step you propose, give a description of it. Do not be too verbose, but one phrase per activity is fine.You can provide some details about accomodation, traditional meals, transportation or activities .
  Provide a final section called "Travel Summary" where you summarize the experience and provide an indication of costs and transfers plus additional suggestions on clothing or equipment.
  Structure the response in sections and bullet points.
  """
