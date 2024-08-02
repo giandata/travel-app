@@ -25,8 +25,6 @@ european_cities = {
 
 travel_options= ["Historic and Cultural","Nature and landscapes","Social and fun events","Food lover","Artistic and religious"]
 
-price_ranges = ['100 - 300 €','300-600 €','600-1000 €','1000-1500 €','1500-2000 €','More than 2000 €']
-
 night_jets = {
     "Austria": ["Vienna", "Salisburgo", "Linz", "Graz", "Innsbruck"],
     "Switzerland": ["Zurich", "Basel"],
@@ -39,4 +37,4 @@ night_jets = {
 }
 
 emoji = ["🕍","🦞","🍹","🏞️","🏰"]
-price_ranges = ['100 - 500 €','500-1000€','1000-2000 €','More than 2000€']
+price_ranges = ['Up to 500 €','500-1000€','1000- 1500 €','Up to 2000 €','More than 2000€']
