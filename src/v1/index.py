@@ -126,17 +126,52 @@ def run():
 
         st.divider()
 
-        st.subheader("What spots do you like to visit?")
+        st.subheader("What type of activities you want in your travel plan?")
 
         col1,col2 =st.columns(2)
         with col1:
-            travel_type = st.radio(
-                label= "Types of visits",
-                options=travel_options,
-                index=None,
-                key="travel_type",
-                help="Select which kind of points of interest to include in the plan",
+            st.write('Select the activities to be searched:')
+            travel_type = []
+            toggle1 = st.toggle(
+                label= "Historical and cultural",
+                value=False,
+                key="cultural toggle",
                 label_visibility="visible")
+            if toggle1:
+               travel_type.append("Historical and cultural")
+
+            toggle2 = st.toggle(
+                label= "Nature and landscapes",
+                value=False, 
+                key="nature toggle",
+                label_visibility="visible")
+            if toggle2:
+               travel_type.append("Nature and landscapes")
+
+            toggle3 = st.toggle(
+                label= "Social and local events",
+                value=False, 
+                key="social toggle",
+                label_visibility="visible")
+            if toggle3:
+              travel_type.append("Social and local events")
+
+            toggle4 = st.toggle(
+                label= "Food Lover",
+                value=False, 
+                key="food toggle",
+                label_visibility="visible")
+            if toggle4:
+               travel_type.append("Food Lover")
+
+            toggle5 = st.toggle(
+                label= "Relax and wellness",
+                value=False, 
+                key="relax toggle",
+                label_visibility="visible")
+            if toggle5:
+               travel_type.append("Relax and wellness")
+            
         with col2:
             with st.expander("Advanced settings"):
                 price_range =[]
