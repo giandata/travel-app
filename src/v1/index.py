@@ -132,45 +132,30 @@ def run():
         with col1:
             st.write('Select the activities to be searched:')
             travel_type = []
-            toggle1 = st.toggle(
-                label= "Historical and cultural",
-                value=False,
-                key="cultural toggle",
-                label_visibility="visible")
-            if toggle1:
-               travel_type.append("Historical and cultural")
 
-            toggle2 = st.toggle(
-                label= "Nature and landscapes",
-                value=False, 
-                key="nature toggle",
-                label_visibility="visible")
-            if toggle2:
-               travel_type.append("Nature and landscapes")
+            toggles = {"Historical and cultural":False,
+             "Nature and landscapes":False,
+             "Social and local events":False,
+             "Food Lover":False,
+             "Relax and wellness":False}
+            
+            if 'toggle_states' not in st.session_state:
+               st.session_state.toggle_states = toggles
 
-            toggle3 = st.toggle(
-                label= "Social and local events",
-                value=False, 
-                key="social toggle",
-                label_visibility="visible")
-            if toggle3:
-              travel_type.append("Social and local events")
 
-            toggle4 = st.toggle(
-                label= "Food Lover",
-                value=False, 
-                key="food toggle",
-                label_visibility="visible")
-            if toggle4:
-               travel_type.append("Food Lover")
+            def update_toggle(key):
+               st.session_state.toggle_states[key] = not st.session_state.toggle_states[key]
 
-            toggle5 = st.toggle(
-                label= "Relax and wellness",
-                value=False, 
-                key="relax toggle",
-                label_visibility="visible")
-            if toggle5:
-               travel_type.append("Relax and wellness")
+            for key in toggles:
+              st.toggle(
+            label= key,
+            value=st.session_state.toggle_states[key],
+            key=key,
+            label_visibility="visible",
+            on_change = update_toggle,
+            args=(key,))
+            
+            travel_type = [key for key, value in st.session_state.toggle_states.items() if value]
             
         with col2:
             with st.expander("Advanced settings"):
