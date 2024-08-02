@@ -47,10 +47,10 @@ if not check_password():
 
 # Main Streamlit app starts here
 
-st.cache_data.clear()
+
 
 def run():
-    
+    st.cache_data.clear()
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
     
