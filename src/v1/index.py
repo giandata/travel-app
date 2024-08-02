@@ -195,7 +195,7 @@ def run():
 
     pressed = st.button(label="Submit", key="Submit", disabled=disabled)
     if pressed:
-      loading = st.info( f"The Engine is preparing a **{travel_type}** travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
+      loading = st.info( f"The Engine is preparing a travel plan starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
       
       client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
       response = client.chat.completions.create(
