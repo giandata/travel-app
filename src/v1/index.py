@@ -291,8 +291,8 @@ def run():
       for i, tab in enumerate(tabs[:-1]):
         with tab:
            st.markdown(days[i])
-        with tabs[-1]:
-           st.markdown(overall_summary)
+      with tabs[-1]:
+          st.markdown(overall_summary)
       
       #for day in days:
         #st.expander(day.split('\n')[0], expanded=False).markdown(day)

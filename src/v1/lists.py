@@ -9,7 +9,6 @@ countries = [
     'Spain', 'Sweden', 'Switzerland', 'Turkey', 'Ukraine', 'United Kingdom', 'Vatican City'
 ]
 
-
 european_cities = {
     "Italy": ["Rome", "Milan", "Naples", "Florence","Bologna","Bari","Genova","Palermo","Turin","Venice","Verona"],
     "France": ["Paris", "Marseille", "Lyon","Strasbourg", "Toulouse","Lille","Nantes"],
@@ -34,5 +33,4 @@ night_jets = {
     "Croatia": ["Zagreb", "Split"]
 }
 
-emoji = ["🕍","🦞","🍹","🏞️","🏰"]
 price_ranges = ['Up to 500 €','500-1000€','1000-1500 €','Up to 2000 €','More than 2000€']
