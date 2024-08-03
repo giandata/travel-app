@@ -130,8 +130,8 @@ def run():
         col1,col2 =st.columns(2)
         with col1:
             st.write('Select the activities to be searched:')
-            from src.v1 import preferences
-            travel_type = preferences.render_toggle()
+            from src.v1 import widget
+            travel_type = widget.travel_type.render_toggle()
          
         with col2:
             with st.expander("Advanced settings"):
