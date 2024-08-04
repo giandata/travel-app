@@ -42,18 +42,20 @@ You have to organize a travel starting in {selected_country}, from {departure}.
  After optimizing the route, if the price range is not provided feel free to explore as if there are no budget constrains.
  If the price range is provided ({price_range}) use it as a context to filter or include more or less expensive activities or visits.
 
+ The travel has to include activities of these types: {travel_type}.
  After optimizing the steps of the route you can search for the activities considering the travel type chosen includes this activities ({travel_type}).
- If more than one travel type is set, try to balance the type of activities based on the user's preferences.
- You can as well give a couple of alternative options for each day if there are several choices of equal interest.
- You can also propose a variable number of activities in each day, when travels consist of several days. Take into account how much time it takes to get to place and how long it takes in average to complete the activity.
+ If {len(travel_type)} is bigger than 1, then balance the type of activities along the travel days.
+ If {len(travel_type)} is bigger than 1, then include optional activities in each day to reflect the different user activities request.
+ You can also propose a variable number of activities in each day, when travels consist of several days.
+ Take into account how much time it takes to get to place and how long it takes in average to complete the activity.
  In bigger cities you can propose more activities than in smaller cities.                    
  Take into account the season of the travel from the date {date} to calibrate results, prefering indoor activities for fall and winter seasons, and outdoor activities for spring and summer travels.
 
  When you have a planned travel, prepare the output.
- Start the travel plan with a section called itinerary summary and write a phrase of accomplishment in finding a plan and create a fancy brief title that describes the travel, with a couple of emojis.
+ Start the travel plan with a section called itinerary summary and write a phrase of accomplishment in finding a plan and create a fancy brief **title** that describes the travel, with a couple of emojis.
  Give the itinerary resume after the title.
- Every day of the plan has to appear as a section, and add 1 emoji per day.
- For each place or step you propose, give a description of it. Do not be too verbose, but one phrase per activity is fine.You can provide some details about accomodation, traditional meals, transportation or activities .
+ Every day of the plan has to appear as a section and printed in bold carachters, add 1 emoji per day based on the most relevant activity proposed, and add a brief phrase in the day title to describe the feeling of the day proposed.
+ For each place or step you propose, give a description of it. Be verbose: you can provide some details about accomodation, traditional meals, transportation or activities .
  Provide a final section called "Travel Summary" where you summarize the experience and provide an indication of costs and transfers plus additional suggestions on clothing or equipment.
  Structure the response in sections and bullet points.
  """
