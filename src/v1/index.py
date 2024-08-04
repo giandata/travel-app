@@ -53,6 +53,11 @@ def run():
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
 
+    "session state:" ,st.session_state
+
+    if "travel_plan" not in st.session_state:
+       st.session_state.travel_plan = None
+
     with st.container(border=True):
         
         st.subheader("Where do you want to travel?")
@@ -63,7 +68,7 @@ def run():
                 label="Departing country",
                 options=country_start,
                 index=None,
-                key="departure country",
+                key="departure_country",
                 help="Select the country of departure",
                 placeholder="From where you want to start your travel?",
                 disabled=False,
@@ -76,7 +81,7 @@ def run():
                 label="Departure City",
                 options=selected_cities,
                 index=None,
-                key="departure",
+                key="departure_city",
                 help="Select city of departure",
                 placeholder="Choose a Departure",
                 disabled=False,
@@ -117,7 +122,7 @@ def run():
         with col2:
             duration = st.slider(
             label="How many days you want to travel?",
-            min_value=1, max_value=7,
+            min_value=1, max_value=10,
             step=1,
             key="duration",
             help="Select how many days you want to travel",
@@ -154,7 +159,7 @@ def run():
             from prompt_v1 import fill_script
             content = fill_script(selected_country,departure,selected_countries,duration,date,night_jets,price_range,travel_type)
 
-    pressed = st.button(label="Submit", key="Submit", disabled=disabled)
+    pressed = st.button(label="Submit", key="submit_form", disabled=disabled)
     if pressed:
       loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
       
@@ -176,7 +181,7 @@ def run():
       if picture:
         image_response = client.images.generate(
           model="dall-e-3",
-          prompt=f"cinematic {travel_type} travel picture in {selected_countries[0]}",
+          prompt=f"cinematic {travel_type} travel picture in {selected_countries}",
           size="1024x1024",
           quality="standard",
           n=1,
@@ -195,6 +200,8 @@ def run():
               st.image(image, caption='Generated Image')
             except Exception as e:
               st.error(f"Error displaying image: {e}")
+
+      st.session_state.travel_plan = response
 
       loading.empty()
       st.balloons()
@@ -250,8 +257,8 @@ def run():
 
       #full response
       #st.markdown(response)  
-
-      st.cache_data.clear()   
+      
+      #st.cache_data.clear()   
 
 
       ##second part of app
