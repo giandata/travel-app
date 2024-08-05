@@ -1,1 +1,1 @@
-from . import travel_type
+from . import travel_type, rating

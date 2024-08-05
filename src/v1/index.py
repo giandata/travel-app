@@ -246,6 +246,11 @@ def run():
            st.markdown(days[i])
       with tabs[-1]:
           st.markdown(overall_summary)
+
+      from src.v1.widget import rating
+
+      rating.render()
+
       
       #for day in days:
         #st.expander(day.split('\n')[0], expanded=False).markdown(day)
