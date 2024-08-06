@@ -7,8 +7,6 @@ from lists import *
 import json
 import pandas as pd
 import hmac
-
-from src import v1
 from openai import OpenAI
       
 
