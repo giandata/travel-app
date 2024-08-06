@@ -1,22 +1,22 @@
 import streamlit as st
 from datetime import datetime, timedelta
-#from openai import OpenAI
 import os
 import sys
 from lists import *
-import json
-import pandas as pd
 import hmac
 from openai import OpenAI
-from src import v1
-      
 
 #from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain_openai import ChatOpenAI
 #from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
 
 # The following line allows using absolute imports relative to "src"
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# Absolutely importing src requires the workspace root to be set (see project_root)
+import src
 
 def check_password():
     """Returns `True` if the user had the correct password."""
@@ -45,7 +45,6 @@ if not check_password():
     st.stop()  # Do not continue if check_password is not True.
 
 # Main Streamlit app starts here
-
 
 def run():
     st.cache_data.clear()
@@ -158,26 +157,26 @@ def run():
     pressed = st.button(label="Submit", key="submit_form", disabled=disabled)
     if pressed:
     # TRAVEL CREATION    
-      loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
+      loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countr{'y' if len(selected_countries) == 1 else 'ies'}: **{" ".join(selected_countries)}**... Wait for the travel plan 🚀🚀", icon="ℹ️")
       
       client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
 
-      response =  v1.core.planner.make_plan(client, content)
+      response = src.v1.core.planner.make_plan(client, content)
       
       if picture:
-          image_response =  v1.core.planner.create_image(client,travel_type,selected_countries)
+          image_response =  src.v1.core.planner.create_image(client,travel_type,selected_countries)
 
       loading.empty()
       st.balloons()
       st.success('Travel planned!',icon="✈️") 
 
-      title_and_summary,days,overall_summary,overall_summary_match =  v1.core.response_processor.response_splitter(response)
+      title_and_summary,days,overall_summary,overall_summary_match = src.v1.core.response_processor.response_splitter(response)
 
       # Display itinerary summary
       st.markdown(title_and_summary)
       
       if image_response:
-           v1.core.planner.display_image_from_url(image_response)
+           src.v1.core.planner.display_image_from_url(image_response)
 
       # Display each day’s details in a single expander
       tab_names = [day.split(':')[0] for day in days]
@@ -191,9 +190,7 @@ def run():
       with tabs[-1]:
           st.markdown(overall_summary)
 
-      from src.v1.widget import rating
-
-      rating.render()
+      src.v1.widget.rating.render()
 
       
       #for day in days:
