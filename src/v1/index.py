@@ -1,7 +1,6 @@
 import streamlit as st
-import requests
 from datetime import datetime, timedelta
-from openai import OpenAI
+#from openai import OpenAI
 import os
 import sys
 from lists import *
@@ -9,12 +8,13 @@ import json
 import pandas as pd
 import hmac
 
+from src import v1
+from openai import OpenAI
+      
+
 #from langchain_core.prompts.chat import ChatPromptTemplate
 #from langchain_openai import ChatOpenAI
 #from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
-
-from PIL import Image
-from io import BytesIO
 
 # The following line allows using absolute imports relative to "src"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
@@ -54,9 +54,6 @@ def run():
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
 
     "session state:" ,st.session_state
-
-    if "travel_plan" not in st.session_state:
-       st.session_state.travel_plan = None
 
     with st.container(border=True):
         
@@ -161,60 +158,27 @@ def run():
 
     pressed = st.button(label="Submit", key="submit_form", disabled=disabled)
     if pressed:
+    # TRAVEL CREATION    
       loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countries: **{selected_countries   }**... Wait for the travel plan 🚀🚀", icon="ℹ️")
       
       client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
-      response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        #response_format={ "type": "json_object" },
-        messages=[{"role": "system", "content": content}],
-        temperature=0.5,
-        max_tokens=1000,
-        top_p=0.1,
-        frequency_penalty=0.2,
-        presence_penalty=0
-      )
+
+      response =  v1.core.planner.make_plan(client, content)
       
-      response = response.choices[0].message.content
-
-      #todo ottimizzare
       if picture:
-        image_response = client.images.generate(
-          model="dall-e-3",
-          prompt=f"cinematic {travel_type} travel picture in {selected_countries}",
-          size="1024x1024",
-          quality="standard",
-          n=1,
-        )
-
-      if picture:
-
-        image_response = image_response.data[0].url
-
-      if picture:
-        def display_image_from_url(image_response):
-          if image_response:
-            try:
-              response = requests.get(image_response)
-              image = Image.open(BytesIO(response.content))
-              st.image(image, caption='Generated Image')
-            except Exception as e:
-              st.error(f"Error displaying image: {e}")
-
-      st.session_state.travel_plan = response
+          image_response =  v1.core.planner.create_image(client,travel_type,selected_countries)
 
       loading.empty()
       st.balloons()
       st.success('Travel planned!',icon="✈️") 
 
-      from src.v1.core.response_processor import response_splitter
-      title_and_summary,days,overall_summary,overall_summary_match = response_splitter(response)
-
+      title_and_summary,days,overall_summary,overall_summary_match =  v1.core.response_processor.response_splitter(response)
 
       # Display itinerary summary
       st.markdown(title_and_summary)
-      if picture:
-        display_image_from_url(image_response)
+      
+      if image_response:
+           v1.core.planner.display_image_from_url(image_response)
 
       # Display each day’s details in a single expander
       tab_names = [day.split(':')[0] for day in days]
