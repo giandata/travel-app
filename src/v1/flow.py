@@ -8,6 +8,7 @@ import json
 import pandas as pd
 import hmac
 from openai import OpenAI
+from src import v1
       
 
 #from langchain_core.prompts.chat import ChatPromptTemplate
@@ -51,7 +52,7 @@ def run():
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
 
-    "session state:" ,st.session_state
+    #"session state:" ,st.session_state
 
     with st.container(border=True):
         
