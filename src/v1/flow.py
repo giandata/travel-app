@@ -151,7 +151,7 @@ def run():
         disabled = selected_country is None or selected_countries is None or departure is None or travel_type is None 
 
         if disabled == False:
-            from prompt_v1 import fill_script
+            from src.v1.core.prompt_v1 import fill_script
             content = fill_script(selected_country,departure,selected_countries,duration,date,night_jets,price_range,travel_type)
 
     pressed = st.button(label="Submit", key="submit_form", disabled=disabled)
@@ -163,6 +163,7 @@ def run():
 
       response = src.v1.core.planner.make_plan(client, content)
       
+      image_response = None
       if picture:
           image_response =  src.v1.core.planner.create_image(client,travel_type,selected_countries)
 
@@ -175,7 +176,7 @@ def run():
       # Display itinerary summary
       st.markdown(title_and_summary)
       
-      if image_response:
+      if image_response is not None:
            src.v1.core.planner.display_image_from_url(image_response)
 
       # Display each day’s details in a single expander
