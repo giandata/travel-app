@@ -1,17 +1,11 @@
-def fill_script(selected_country,
-                departure,
-                selected_countries
-                ,duration,
-                date,night_jets,
-                price_range,
-                travel_type):
-    travel_type = ', '.join(travel_type)
+def fill_script(
+    selected_countries, duration, date, night_jets, price_range, travel_type
+):
+    travel_type = ", ".join(travel_type)
     return f"""
 You are a travel planner, you organize transport and stay for the customer.
 
-You have to organize a travel starting in {selected_country}, from {departure}.
-
- The travel can have up to 5 destination countries: {selected_countries}
+You have to organize a travel that can have up to 5 destination countries: {selected_countries}
  The travel must be long {duration} days.
  If some countries are not reachable in a reasonable time considering the duration of the travel ({duration}),
  skip the furthest country and optimize the route across the rest of provided countries. 

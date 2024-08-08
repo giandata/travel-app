@@ -56,34 +56,34 @@ def run():
     with st.container(border=True):
         
         st.subheader("Where do you want to travel?")
-        col1,col2 = st.columns([2,2])
+        # col1,col2 = st.columns([2,2])
 
-        with col1:
-            selected_country = st.selectbox(
-                label="Departing country",
-                options=country_start,
-                index=None,
-                key="departure_country",
-                help="Select the country of departure",
-                placeholder="From where you want to start your travel?",
-                disabled=False,
-                label_visibility="visible")
+        # with col1:
+        #     selected_country = st.selectbox(
+        #         label="Departing country",
+        #         options=country_start,
+        #         index=None,
+        #         key="departure_country",
+        #         help="Select the country of departure",
+        #         placeholder="From where you want to start your travel?",
+        #         disabled=False,
+        #         label_visibility="visible")
 
-        selected_cities = european_cities.get(selected_country, [])
+        # selected_cities = european_cities.get(selected_country, [])
 
-        with col2:
-            departure = st.selectbox(
-                label="Departure City",
-                options=selected_cities,
-                index=None,
-                key="departure_city",
-                help="Select city of departure",
-                placeholder="Choose a Departure",
-                disabled=False,
-                label_visibility="visible",
-            )
+        # with col2:
+        #     departure = st.selectbox(
+        #         label="Departure City",
+        #         options=selected_cities,
+        #         index=None,
+        #         key="departure_city",
+        #         help="Select city of departure",
+        #         placeholder="Choose a Departure",
+        #         disabled=False,
+        #         label_visibility="visible",
+        #     )
 
-        st.divider() 
+        # st.divider() 
 
         selected_countries = st.multiselect(
                 label= 'Countries to visit',
@@ -148,16 +148,16 @@ def run():
                   key='picbox'
                 )
 
-        disabled = selected_country is None or selected_countries is None or departure is None or travel_type is None 
+        disabled = selected_countries is None or travel_type is None 
 
         if disabled == False:
             from src.v1.core.prompt_v1 import fill_script
-            content = fill_script(selected_country,departure,selected_countries,duration,date,night_jets,price_range,travel_type)
+            content = fill_script(selected_countries,duration,date,night_jets,price_range,travel_type)
 
     pressed = st.button(label="Submit", key="submit_form", disabled=disabled)
     if pressed:
     # TRAVEL CREATION    
-      loading = st.info( f"The Engine is preparing a travel plan travel starting in **{departure}**,**{selected_country}**, for the duration of **{duration}** days visiting these countr{'y' if len(selected_countries) == 1 else 'ies'}: **{" ".join(selected_countries)}**... Wait for the travel plan 🚀🚀", icon="ℹ️")
+      loading = st.info( f"The Engine is creating a travel of **{duration}** days visiting **{", ".join(selected_countries)}**... Wait for the plan 🚀🚀", icon="ℹ️")
       
       client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
 
@@ -169,7 +169,7 @@ def run():
 
       loading.empty()
       st.balloons()
-      st.success('Travel planned!',icon="✈️") 
+      st.success('Travel plan is ready!',icon="✈️") 
 
       title_and_summary,days,overall_summary,overall_summary_match = src.v1.core.response_processor.response_splitter(response)
 
