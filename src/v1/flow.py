@@ -48,9 +48,6 @@ def run():
     st.title("Travel Planner Ai ✈️")
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
 
-    logo_path = r"C:\Users\39380\Desktop\workspace\projects\travel-app\src\v1\logo.jpg"
-    st.sidebar.image(logo_path)
-
     with st.container(border=True):
 
         st.subheader("Where do you want to travel?")
