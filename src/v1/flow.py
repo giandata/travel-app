@@ -84,7 +84,8 @@ def run():
         #     )
 
         # st.divider() 
-
+        
+        st.write("Which european countries you want to travel to? Select up to 5 countries" )
         selected_countries = st.multiselect(
                 label= 'Countries to visit',
                 options=countries,
@@ -93,8 +94,9 @@ def run():
                 max_selections=5,
                 placeholder="Choose at least 1 country",
                 label_visibility="visible")
-        
-        st.markdown("You selected %s" % ", ".join(selected_countries))
+    
+        if len(selected_countries) > 0:
+            st.markdown("You selected %s" % ", ".join(selected_countries))
 
 
         st.divider()
