@@ -123,15 +123,17 @@ def run():
                     "Group of friends",
                 ],
             )
-            transportation = st.multiselect(
-                label="Select the transportation preferences",
-                options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
-            )
 
             accomodation = st.radio(
                 label="Preferred accomodation",
                 options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
             )
+
+            transportation = st.multiselect(
+                label="Select the transportation preferences",
+                options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
+            )
+
             overnight_transfers = st.checkbox(
                 label="Check this box if you want to look for overnight transfers"
             )
@@ -146,9 +148,8 @@ def run():
         st.write("")
         picture = st.checkbox(label="Generate AI picture", value=False, key="picbox")
 
-        disabled = selected_countries is None or travel_type is None
-
-        if disabled == False:
+        active = selected_countries and travel_type and travel_style
+        if active:
             from src.v1.core.prompt_v1 import fill_script
 
             content = fill_script(
@@ -156,9 +157,9 @@ def run():
             )
 
     pressed = st.button(
-        label="Creare Personalized travel plan",
+        label="Create Personalized travel plan",
         key="submit_form",
-        disabled=disabled,
+        disabled=not active,
         use_container_width=True,
         type="primary",
     )
@@ -209,6 +210,7 @@ def run():
         with tabs[-1]:
             st.markdown(overall_summary)
 
+        # todo avoid launching ballons
         src.v1.widget.rating.render()
 
         st.download_button(data=response, label="Download itinerary")
