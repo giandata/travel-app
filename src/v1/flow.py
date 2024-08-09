@@ -58,10 +58,10 @@ def run():
             label="Countries to visit",
             options=countries,
             key="steps",
-            help="Select up to 5 countries to visit",
             max_selections=5,
             placeholder="Choose at least 1 country",
             label_visibility="visible",
+            help="Required",
         )
 
         st.write("")
@@ -99,7 +99,7 @@ def run():
 
         col1, col2 = st.columns(2)
         with col1:
-            st.write("Select the activities to be searched:")
+            st.write("Select the activities to be searched (required):")
             from src.v1 import widget
 
             travel_type = widget.travel_type.render_toggle()
@@ -109,6 +109,7 @@ def run():
                 label="Select the travel pace",
                 options=["Relaxed", "Moderate", "Fast-paced"],
                 index=None,
+                help="Required",
             )
         st.write("")
         with st.expander(
@@ -123,20 +124,25 @@ def run():
                     "Group of friends",
                 ],
                 index=None,
+                help="Optional",
             )
 
             accomodation = st.radio(
                 label="Preferred accomodation",
                 options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
                 index=None,
+                help="Optional",
             )
 
             transportation = st.multiselect(
                 label="Select the transportation preferences",
                 options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
+                help="Optional",
             )
 
-            overnight_transfers = st.checkbox(label="Look for overnight transfers")
+            overnight_transfers = st.checkbox(
+                label="Look for overnight transfers", help="Optional"
+            )
 
             st.write("Budget Settings")
             price_range = st.select_slider(
@@ -146,7 +152,12 @@ def run():
             )
 
         st.write("")
-        picture = st.checkbox(label="Generate AI picture", value=False, key="picbox")
+        picture = st.checkbox(
+            label="Generate AI picture",
+            value=False,
+            key="picbox",
+            help="Only for Premium Users",
+        )
 
         active = selected_countries and travel_type and travel_pace
         if active:
