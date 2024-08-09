@@ -1,7 +1,20 @@
 def fill_script(
-    selected_countries, duration, date, night_jets, price_range, travel_type
+    selected_countries,
+    duration,
+    date,
+    night_jets,
+    price_range,
+    travel_type,
+    travel_pace,
+    **kwargs,
 ):
     travel_type = ", ".join(travel_type)
+
+    overnight_transfers = kwargs.get("overnight_transfers", None)
+    transportation = kwargs.get("transportation", None)
+    traveler_type = kwargs.get("traveler_type", None)
+    accomodation = kwargs.get("accomodation", None)
+
     return f"""
 You are a travel planner, you organize transport and stay for the customer.
 
@@ -24,17 +37,29 @@ You have to organize a travel to these destinations countries: {selected_countri
  After you have optimized the route proceed with providing the recommended transportation options.
  If you skip any of the selected countries explain in the output why it was skipped, if for distance or time.
 
- No more than 2 cities of the same country can be touched in a single day.
- When travels include less countries to visit than days of travel, you can propose 2 day in the same location or same country.
+ the travel pace is {travel_pace}. 
+ If the travel pace is equal to relaxed then suggest 2 activities per day, excluding meals.
+ If the travel pace is equal to moderate then suggest between 3 and 4 activities per day, excluding meals.
+ If the travel pace is equal to fast-paced then suggest 4 or more activities per day, excluding meals.
+ Independently of the travel pace, maximum 2 cities of the same country can be visited in a single day.
+ The countries to visits are {len(selected_countries)}.
+ The days of travel are {duration}.
+ If the preferences are with less countries to visit than days of travel,suggest 2 days in the same location or same country.
 
- Try to suggest train transfer if the plan includes cities of the same country. 
- Flights are convenient in the beginnning and end of the travel.
+ The transportation preference is  by: {transportation}.
+ Find appropriate solution based on the transportation preference expressed.
+ 
+ The option to look for overnight transfer is {overnight_transfers}. If this option is true, then look for overnight transfers, using the {transportation} transport preference.
  If the routes includes different countries try to find night transportation like Nightjets across europe.
  You can find the cities with Night jet inside {night_jets}.
  If at least 2 of the selected countries match the countries of the night jet dictionary {night_jets} try to suggest the linking night train.
 
+ Use the traveler type to suggest appropriate activities. The traveler type is {traveler_type}.
+
  After optimizing the route, if the price range is not provided feel free to explore as if there are no budget constrains.
  If the price range is provided ({price_range}) use it as a context to filter or include more or less expensive activities or visits.
+
+ Use the accomodation preference in combination with price_range to make an equilibrated plan. the accomodation preferene is {accomodation}
 
  The travel has to include activities of these types: {travel_type}.
  After optimizing the steps of the route you can search for the activities considering the travel type chosen includes this activities ({travel_type}).
@@ -42,7 +67,8 @@ You have to organize a travel to these destinations countries: {selected_countri
  If {len(travel_type)} is bigger than 1, then include optional activities in each day to reflect the different user activities request.
  You can also propose a variable number of activities in each day, when travels consist of several days.
  Take into account how much time it takes to get to place and how long it takes in average to complete the activity.
- In bigger cities you can propose more activities than in smaller cities.                    
+ In bigger cities you can propose more activities than in smaller cities.   
+
  Take into account the season of the travel from the date {date} to calibrate results, prefering indoor activities for fall and winter seasons, and outdoor activities for spring and summer travels.
 
  When you have a planned travel, prepare the output.

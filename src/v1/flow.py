@@ -105,7 +105,7 @@ def run():
             travel_type = widget.travel_type.render_toggle()
 
         with col2:
-            travel_style = st.radio(
+            travel_pace = st.radio(
                 label="Select the travel pace",
                 options=["Relaxed", "Moderate", "Fast-paced"],
                 index=None,
@@ -122,11 +122,13 @@ def run():
                     "Family travel",
                     "Group of friends",
                 ],
+                index=None,
             )
 
             accomodation = st.radio(
                 label="Preferred accomodation",
                 options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
+                index=None,
             )
 
             transportation = st.multiselect(
@@ -134,9 +136,7 @@ def run():
                 options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
             )
 
-            overnight_transfers = st.checkbox(
-                label="Check this box if you want to look for overnight transfers"
-            )
+            overnight_transfers = st.checkbox(label="Look for overnight transfers")
 
             st.write("Budget Settings")
             price_range = st.select_slider(
@@ -148,13 +148,38 @@ def run():
         st.write("")
         picture = st.checkbox(label="Generate AI picture", value=False, key="picbox")
 
-        active = selected_countries and travel_type and travel_style
+        active = selected_countries and travel_type and travel_pace
         if active:
             from src.v1.core.prompt_v1 import fill_script
 
             content = fill_script(
-                selected_countries, duration, date, night_jets, price_range, travel_type
+                selected_countries,
+                travel_type,
+                travel_pace,
+                duration,
+                date,
+                night_jets,
+                price_range,
+                transportation=transportation,
+                accomodation=accomodation,
+                overnight_transfers=overnight_transfers,
             )
+
+            with st.expander("Review preferences"):
+                st.markdown("Destinations: " + ", ".join(selected_countries))
+
+                st.markdown(f"Departure date: {date}")
+                st.write(f"Duration (days): {duration}")
+                st.markdown(", ".join(travel_type))
+
+                st.write(f"Travel pace: {travel_pace}")
+                st.write(f"Budget: {price_range}")
+                if accomodation is not None:
+                    st.markdown(f"Accomodation: {accomodation}")
+                if len(transportation) > 0:
+                    st.markdown(" Transportation: " + ", ".join(transportation))
+                if overnight_transfers is not None:
+                    st.write("Overnight transfers")
 
     pressed = st.button(
         label="Create Personalized travel plan",
