@@ -27,8 +27,8 @@ You have to organize a travel to these destinations countries: {selected_countri
  and the number of countries is higher than the number of days ({duration}), you can skip the visits in the starting country. 
  The travel needs to start on the provided departure date: {date}.
 
- Suggest a plan for the duration of {duration} days.
- Feel free to explore 1 day longer travels, but make the customer aware of it.
+ The travel plan must have the duration of {duration} days.
+ Balance the activity quantity and quality by using the travel budget of {price_range}, feel free to go as above as necessary in the budget to reach the the number of days of the travel.
  Optimize the route by minimizing time and travel distance having geopgraphical cognition of Europe.
 
  Not all the provided countries {selected_countries} have to be necessarily touched in the order they are provided.
