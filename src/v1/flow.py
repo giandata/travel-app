@@ -61,7 +61,7 @@ def run():
         st.sidebar.write("Welcome to the travel planner !")
         st.sidebar.image(logo_pic)
 
-        st.subheader("Where do you want to travel?")
+        st.subheader("Where do you want to travel?", anchor=False)
         st.markdown(
             "Which european countries you want to travel to? Select up to 5 countries"
         )
@@ -78,7 +78,7 @@ def run():
         st.write("")
 
         st.divider()
-        st.subheader("When do you want to travel?")
+        st.subheader("When do you want to travel?", anchor=False)
 
         col1, col2 = st.columns([3, 3], gap="large")
         with col1:
@@ -106,7 +106,7 @@ def run():
             )
 
         st.divider()
-        st.subheader("What is your travel style?")
+        st.subheader("What is your travel style?", anchor=False)
 
         col1, col2 = st.columns(2)
         with col1:
