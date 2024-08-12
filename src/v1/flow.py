@@ -5,6 +5,7 @@ import sys
 from lists import *
 import hmac
 from openai import OpenAI
+from PIL import Image
 
 # The following line allows using absolute imports relative to "src"
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -20,6 +21,7 @@ def check_password():
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
+
         if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # Don't store the password.
@@ -45,13 +47,22 @@ if not check_password():
 
 def run():
     st.cache_data.clear()
-    st.title("Travel Planner Ai ✈️")
+    st.title("BlinkTravel App🛤️", anchor=False)
     st.header("Tell the Engine about your dream travel, he will plan it for you!")
+    st.divider()
 
-    with st.container(border=True):
+    if "travel_plan" not in st.session_state:
+        st.session_state["travel_plan"] = None
+
+    with st.container(border=False):
+
+        logo = "logo.png"
+        logo_pic = Image.open(logo)
+        st.sidebar.write("Welcome to the travel planner !")
+        st.sidebar.image(logo_pic)
 
         st.subheader("Where do you want to travel?")
-        st.write(
+        st.markdown(
             "Which european countries you want to travel to? Select up to 5 countries"
         )
         selected_countries = st.multiselect(
@@ -195,24 +206,39 @@ def run():
     pressed = st.button(
         label="Create Personalized travel plan",
         key="submit_form",
-        disabled=not active,
+        # TODO fare in modo che si disattiva nel momento in cui si sta creando un plan
+        # disabled=not active,
         use_container_width=True,
         type="primary",
+        help="Select at least 1 destination and the travel style settings",
     )
     if pressed:
         if not selected_countries:
-            st.warning("Please select at least one destination country.")
+            st.warning("Please select at least one destination country")
         elif not travel_type:
-            st.warning("Please select the type of activities.")
+            st.warning("Please select the type of activities")
+        elif not travel_pace:
+            st.warning("Please select the desider travel pace")
         else:
             # TRAVEL CREATION
             loading = st.info(
-                "The Engine is creating a personalized travel... Wait for the plan 🚀🚀",
+                "The Engine is creating your custom travel ... Wait for the plan 🚀🚀",
                 icon="ℹ️",
             )
+            progress_bar = st.progress(0)  # Initialize the progress bar
 
-        client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
-        response = src.v1.core.planner.make_plan(client, content)
+            # Simulate the travel plan generation
+            import time
+
+            for i in range(100):
+                # Update the progress bar incrementally
+                time.sleep(0.5)  # Simulate time-consuming process
+                progress_bar.progress(i + 1)
+
+        if active:
+            client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
+            response = src.v1.core.planner.make_plan(client, content)
+            st.session_state["travel_plan"] = True
 
         image_response = None
         if picture:
@@ -220,38 +246,59 @@ def run():
                 client, travel_type, selected_countries
             )
 
+        if st.session_state["travel_plan"]:
             loading.empty()
+            progress_bar.empty()
             st.balloons()
             st.success("Travel plan is ready!", icon="✈️")
 
-        title_and_summary, days, overall_summary, overall_summary_match = (
-            src.v1.core.response_processor.response_splitter(response)
-        )
+            title_and_summary, days, overall_summary, overall_summary_match = (
+                src.v1.core.response_processor.response_splitter(response)
+            )
 
-        # Display itinerary summary
-        st.markdown(title_and_summary)
+            # Display itinerary summary
+            st.markdown(title_and_summary)
 
-        if image_response is not None:
-            src.v1.core.planner.display_image_from_url(image_response)
+            if image_response is not None:
+                src.v1.core.planner.display_image_from_url(image_response)
 
-        # Display each day’s details in a single expander
-        tab_names = [day.split(":")[0] for day in days]
-        if overall_summary_match:
-            tab_names.append("Itinerary Summary")
-            tabs = st.tabs(tab_names)
-        # Loop through tabs and generate content
-        for i, tab in enumerate(tabs[:-1]):
-            with tab:
-                st.markdown(days[i])
-        with tabs[-1]:
-            st.markdown(overall_summary)
+            # Display each day’s details in a single expander
+            tab_names = [day.split(":")[0] for day in days]
+            with st.container(border=True):
+                if overall_summary_match:
+                    tab_names.append("Itinerary Summary")
+                    tabs = st.tabs(tab_names)
+                # Loop through tabs and generate content
+                for i, tab in enumerate(tabs[:-1]):
+                    with tab:
+                        st.markdown(days[i])
+                with tabs[-1]:
+                    st.markdown(overall_summary)
 
-        # todo avoid launching ballons
-        src.v1.widget.rating.render()
+                # todo avoid launching ballons
+                # todo make that only 1 feedback can be given
+                src.v1.widget.rating.render()
 
-        st.download_button(data=response, label="Download itinerary")
+            # st.download_button(data=response, label="Download itinerary")
+            # Generate the PDF
+            # pdf_buffer = src.v1.core.pdf.create_pdf(
+            #    title_and_summary, days, overall_summary)
 
-        st.cache_data.clear()
+            if st.session_state["travel_plan"]:
+                countries_name = "_".join(
+                    countries
+                )  # Join country names with underscores
+                file_name = f"{selected_countries}_blinktravel_plan.txt"
+
+            # Provide a download button for the PDF
+            st.download_button(
+                label="Download itinerary",
+                data=response,  # pdf_buffer :TODO WHEN JSON THEN PDF
+                file_name=file_name,
+                # mime="application/pdf",
+            )
+
+            st.cache_data.clear()
 
 
 if __name__ == "__main__":
