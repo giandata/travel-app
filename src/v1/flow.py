@@ -60,6 +60,7 @@ def run():
         logo_pic = Image.open(logo)
         st.sidebar.write("Welcome to the travel planner !")
         st.sidebar.image(logo_pic)
+        st.sidebar.write(st.session_state)
 
         st.subheader("Where do you want to travel?", anchor=False)
         st.markdown(
@@ -121,6 +122,7 @@ def run():
                 options=["Relaxed", "Moderate", "Fast-paced"],
                 index=None,
                 help="Required",
+                key="travel_pace",
             )
         st.write("")
         with st.expander(
@@ -136,6 +138,7 @@ def run():
                 ],
                 index=None,
                 help="Optional",
+                key="traveler_type",
             )
 
             accomodation = st.radio(
@@ -143,16 +146,20 @@ def run():
                 options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
                 index=None,
                 help="Optional",
+                key="accomodation",
             )
 
             transportation = st.multiselect(
                 label="Select the transportation preferences",
                 options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
                 help="Optional",
+                key="transportation",
             )
 
             overnight_transfers = st.checkbox(
-                label="Look for overnight transfers", help="Optional"
+                label="Look for overnight transfers",
+                help="Optional",
+                key="night_transfers",
             )
 
             st.write("Budget Settings")
@@ -160,6 +167,7 @@ def run():
                 label="Provide an indicative price range (€)",
                 options=price_ranges,
                 help="Specify the travel budget to organize a travel that best suits you",
+                key="budget",
             )
 
         st.write("")
