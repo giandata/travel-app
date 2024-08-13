@@ -193,6 +193,7 @@ def run():
                 transportation=transportation,
                 accomodation=accomodation,
                 overnight_transfers=overnight_transfers,
+                traveler_type=traveler_type,
             )
 
             with st.expander("Review preferences"):
@@ -292,7 +293,7 @@ def run():
             # pdf_buffer = src.v1.core.pdf.create_pdf(
             #    title_and_summary, days, overall_summary)
 
-            if st.session_state["travel_plan"]:
+            if st.session_state["steps"]:
                 countries_name = "_".join(
                     countries
                 )  # Join country names with underscores
