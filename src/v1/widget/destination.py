@@ -15,4 +15,6 @@ def country_selection():
         label_visibility="visible",
         help="Required",
     )
-    return selected_countries
+    default =st.session_state.get("selected_countries",[])
+    st.session_state["selected_countries"] = selected_countries
+    return  st.session_state.selected_countries

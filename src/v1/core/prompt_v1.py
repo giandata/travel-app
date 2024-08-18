@@ -4,11 +4,11 @@ def fill_script(
     date,
     night_jets,
     price_range,
-    travel_type,
+    travel_activities,
     travel_pace,
     **kwargs,
 ):
-    travel_type = ", ".join(travel_type)
+    travel_activities = ", ".join(travel_activities)
 
     overnight_transfers = kwargs.get("overnight_transfers", None)
     transportation = kwargs.get("transportation", None)
@@ -60,10 +60,10 @@ You have to organize a travel to these destinations countries: {selected_countri
 
  Use the accomodation preference in combination with price_range to make an equilibrated plan. the accomodation preferene is {accomodation}
 
- The travel has to include activities of these types: {travel_type}.
- After optimizing the steps of the route you can search for the activities considering the travel type chosen includes this activities ({travel_type}).
- If {len(travel_type)} is bigger than 1, then balance the type of activities along the travel days.
- If {len(travel_type)} is bigger than 1, then include optional activities in each day to reflect the different user activities request.
+ The travel has to include activities of these types: {travel_activities}.
+ After optimizing the steps of the route you can search for the activities considering the travel type chosen includes this activities ({travel_activities}).
+ If {len(travel_activities)} is bigger than 1, then balance the type of activities along the travel days.
+ If {len(travel_activities)} is bigger than 1, then include optional activities in each day to reflect the different user activities request.
  You can also propose a variable number of activities in each day, when travels consist of several days.
  Take into account how much time it takes to get to place and how long it takes in average to complete the activity.
  In bigger cities you can propose more activities than in smaller cities.   

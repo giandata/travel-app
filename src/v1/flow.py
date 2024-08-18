@@ -236,7 +236,7 @@ def run():
                 countries_name = "_".join(
                     countries
                 )  # Join country names with underscores
-                file_name = f"{selected_countries}_blinktravel_plan.txt"
+                file_name = f"{countries_name}_blinktravel_plan.txt"
 
             # Provide a download button for the PDF
             st.download_button(
