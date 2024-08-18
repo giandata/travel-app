@@ -1,5 +1,4 @@
 import streamlit as st
-from datetime import datetime, timedelta
 import os
 import sys
 from lists import *
@@ -66,111 +65,47 @@ def run():
         st.markdown(
             "Which european countries you want to travel to? Select up to 5 countries"
         )
-        selected_countries = st.multiselect(
-            label="Countries to visit",
-            options=countries,
-            key="steps",
-            max_selections=5,
-            placeholder="Choose at least 1 country",
-            label_visibility="visible",
-            help="Required",
-        )
 
-        st.write("")
+        from src.v1 import widget
+        from widget import destination, departure, travel_type, travel_preferences
+
+        selected_countries = destination.country_selection()
 
         st.divider()
         st.subheader("When do you want to travel?", anchor=False)
 
         col1, col2 = st.columns([3, 3], gap="large")
         with col1:
-            now = datetime.now()
-            date = st.date_input(
-                label="Date of departure",
-                value=now,
-                min_value=now,
-                max_value=now + timedelta(days=365),
-                key="date",
-                help="Select date of departure",
-                format="YYYY/MM/DD",
-                label_visibility="visible",
-            )
+            date = departure.departure_date()
 
         with col2:
-            duration = st.slider(
-                label="How many days you want to travel?",
-                min_value=1,
-                max_value=10,
-                step=1,
-                key="duration",
-                help="Select how many days you want to travel",
-                label_visibility="visible",
-            )
+            duration = departure.travel_duration()
 
         st.divider()
         st.subheader("What is your travel style?", anchor=False)
 
         col1, col2 = st.columns(2)
         with col1:
-            st.write("Select the activities to be searched (required):")
-            from src.v1 import widget
+            st.write("Select the type of activities for your travel (required):")
 
-            travel_type = widget.travel_type.render_toggle()
+            travel_type = travel_type.render_toggle()
 
         with col2:
-            travel_pace = st.radio(
-                label="Select the travel pace",
-                options=["Relaxed", "Moderate", "Fast-paced"],
-                index=None,
-                help="Required",
-                key="travel_pace",
-            )
-        st.write("")
+            travel_pace = widget.travel_type.travel_pace()
+
         with st.expander(
             "Provide more details about your travel preferences for personalized travel plan:"
         ):
-            traveler_type = st.radio(
-                label="Traveler type:",
-                options=[
-                    "Solo Traveler",
-                    "Couple",
-                    "Family travel",
-                    "Group of friends",
-                ],
-                index=None,
-                help="Optional",
-                key="traveler_type",
-            )
+            traveler_type = travel_preferences.traveler_type()
 
-            accomodation = st.radio(
-                label="Preferred accomodation",
-                options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
-                index=None,
-                help="Optional",
-                key="accomodation",
-            )
+            accomodation = travel_preferences.accomodation()
 
-            transportation = st.multiselect(
-                label="Select the transportation preferences",
-                options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
-                help="Optional",
-                key="transportation",
-            )
+            transportation = travel_preferences.preferred_transport()
 
-            overnight_transfers = st.checkbox(
-                label="Look for overnight transfers",
-                help="Optional",
-                key="night_transfers",
-            )
+            overnight_transfers = travel_preferences.night_transfers()
 
-            st.write("Budget Settings")
-            price_range = st.select_slider(
-                label="Provide an indicative price range (€)",
-                options=price_ranges,
-                help="Specify the travel budget to organize a travel that best suits you",
-                key="budget",
-            )
+            price_range = travel_preferences.budget()
 
-        st.write("")
         picture = st.checkbox(
             label="Generate AI picture",
             value=False,
