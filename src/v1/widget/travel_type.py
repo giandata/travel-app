@@ -32,14 +32,16 @@ def render_toggle():
 def travel_activities():
     activities = st.multiselect(
         label="select up to 4 types of activities",
-        options=["City sightseeing",
-                 "Cultural and Historic",
-                 "Local cuisine",
-                 "Hiking and Nature",
-                 "Relax and Wellness",
-                 "Social and Events",
-                 "Concerts and Festivals",
-                 "Locals experience"]
+        options=[
+            "City sightseeing",
+            "Cultural and Historic",
+            "Local cuisine",
+            "Hiking and Nature",
+            "Relax and Wellness",
+            "Social and Events",
+            "Concerts and Festivals",
+            "Locals experience",
+        ],
         max_selections=4,
         placeholder="Choose at least 1 type of activity",
         label_visibility="visible",
@@ -55,5 +57,6 @@ def travel_pace():
         index=None,
         help="Required",
         key="travel_pace",
+        horizontal=True,
     )
     return travel_pace

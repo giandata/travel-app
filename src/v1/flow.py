@@ -17,6 +17,7 @@ if project_root not in sys.path:
 import src
 
 
+# LOGIN
 def check_password():
     """Returns `True` if the user had the correct password."""
 
@@ -46,6 +47,7 @@ if not check_password():
     st.stop()
 
 
+# App
 def run():
     st.cache_data.clear()
     st.title("BlinkTravel App🛤️", anchor=False)
@@ -55,12 +57,14 @@ def run():
     if "travel_plan" not in st.session_state:
         st.session_state["travel_plan"] = None
 
+    # sidebar
     logo = "logo.png"
     logo_pic = Image.open(logo)
     st.sidebar.write("Welcome to the travel planner !")
     st.sidebar.image(logo_pic)
     st.sidebar.write(st.session_state)
 
+    # RENDER FORM AND SUBMIT
     content, picture = form.render_form()
 
     # TRAVEL CREATION
@@ -90,23 +94,16 @@ def run():
 
             if image_response is not None:
                 src.v1.core.planner.display_image_from_url(image_response)
-
-            # Display each day’s details in a single expander
-
             with st.container(border=True):
                 src.v1.core.response_processor.show_response(
                     days, overall_summary_match, overall_summary
                 )
 
+                # Rating widget
                 # TODO make that only 1 feedback can be given AND avoid launching ballons
                 src.v1.widget.rating.render()
 
             st.session_state["travel_plan"] = False
-
-            # st.download_button(data=response, label="Download itinerary")
-            # Generate the PDF
-            # pdf_buffer = src.v1.core.pdf.create_pdf(
-            #    title_and_summary, days, overall_summary)
 
             if st.session_state["steps"]:
                 countries_name = "_".join(
@@ -114,7 +111,7 @@ def run():
                 )  # Join country names with underscores
                 file_name = f"{countries_name}_blinktravel_plan.txt"
 
-            # Provide a download button
+            # Download button
             @st.fragment
             def download_itinerary():
                 st.download_button(
