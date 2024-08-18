@@ -1,1 +1,1 @@
-from . import core, widget
+from . import core, widget, form
