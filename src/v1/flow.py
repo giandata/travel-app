@@ -53,6 +53,7 @@ def run():
     if "travel_plan" not in st.session_state:
         st.session_state["travel_plan"] = None
 
+    # TRAVEL CONFIGURATION INPUT
     with st.container(border=False):
 
         logo = "logo.png"
@@ -88,7 +89,7 @@ def run():
         with col1:
             st.write("Select the type of activities for your travel (required):")
 
-            travel_type = travel_type.render_toggle()
+            travel_activities = travel_type.render_toggle()
 
         with col2:
             travel_pace = widget.travel_type.travel_pace()
@@ -136,7 +137,7 @@ def run():
 
                 st.markdown(f"Departure date: {date}")
                 st.write(f"Duration (days): {duration}")
-                st.markdown(", ".join(travel_type))
+                st.markdown(", ".join(travel_activities))
 
                 st.write(f"Travel pace: {travel_pace}")
                 st.write(f"Budget: {price_range}")
@@ -147,6 +148,7 @@ def run():
                 if overnight_transfers is not None:
                     st.write("Overnight transfers")
 
+    # SUBMIT BUTTON
     pressed = st.button(
         label="Create Personalized travel plan",
         key="submit_form",
@@ -156,15 +158,16 @@ def run():
         type="primary",
         help="Select at least 1 destination and the travel style settings",
     )
+
+    # CONDITIONS TO CALL ENGINE
     if pressed:
         if not selected_countries:
             st.warning("Please select at least one destination country")
-        elif not travel_type:
+        elif not travel_activities:
             st.warning("Please select the type of activities")
         elif not travel_pace:
             st.warning("Please select the desider travel pace")
         else:
-            # TRAVEL CREATION
             loading = st.info(
                 "The Engine is creating your custom travel ... Wait for the plan 🚀🚀",
                 icon="ℹ️",
@@ -179,6 +182,7 @@ def run():
                 time.sleep(0.5)  # Simulate time-consuming process
                 progress_bar.progress(i + 1)
 
+        # TRAVEL CREATION
         if active:
             client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
             response = src.v1.core.planner.make_plan(client, content)

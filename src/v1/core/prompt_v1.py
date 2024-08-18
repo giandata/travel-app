@@ -19,16 +19,15 @@ def fill_script(
 You are a travel planner, you organize transport and stay for the customer.
 
 You have to organize a travel to these destinations countries: {selected_countries}
- The travel must be long {duration} days.
+ The travel must be long EXACTLY {duration} days.
  If any countries is not reachable in a reasonable time considering the duration of the travel of  {duration} days,
  skip the furthest country and optimize the route across the rest of provided countries. 
 
  In case the starting country is included in countries to visit ({selected_countries}) 
  and the number of countries is higher than the number of days ({duration}), you can skip the visits in the starting country. 
- The travel needs to start on the provided departure date: {date}.
+ The travel has to start on the provided departure date: {date}.
 
- The travel plan must have the duration of {duration} days.
- Balance the activity quantity and quality by using the travel budget of {price_range}, feel free to go as above as necessary in the budget to reach the the number of days of the travel.
+ Balance the activity quantity and quality by using the travel budget of {price_range}, feel free to go as above as necessary in the budget to reach the number of days of the travel.
  Optimize the route by minimizing time and travel distance having geopgraphical cognition of Europe.
 
  Not all the provided countries {selected_countries} have to be necessarily touched in the order they are provided.
