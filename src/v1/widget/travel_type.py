@@ -29,6 +29,18 @@ def render_toggle():
     return [key for key, value in st.session_state.toggle_states.items() if value]
 
 
+def travel_activities():
+    activities = st.multiselect(
+        label="select up to 3 types of activities",
+        options=["hiking", "relax", "city sight", "cultural", "social"],
+        max_selections=3,
+        placeholder="Choose at least 1 type of activity",
+        label_visibility="visible",
+        help="Required",
+    )
+    return activities
+
+
 def travel_pace():
     travel_pace = st.radio(
         label="Select the travel pace",
