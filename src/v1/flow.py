@@ -68,7 +68,10 @@ def run():
         client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
         response = src.v1.core.planner.make_plan(client, content)
         st.session_state["travel_plan"] = True
+        st.balloons()
+        st.success("Travel plan is ready!", icon="✈️")
 
+    # TRAVEL PIC CREATION
     image_response = None
     if picture:
         image_response = src.v1.core.planner.create_image(
@@ -76,62 +79,54 @@ def run():
         )
 
     if st.session_state["travel_plan"]:
-        # loading.empty()
-        st.balloons()
-        st.success("Travel plan is ready!", icon="✈️")
 
-        title_and_summary, days, overall_summary, overall_summary_match = (
-            src.v1.core.response_processor.response_splitter(response)
-        )
-
-        # Display itinerary summary
-        st.markdown(title_and_summary)
-
-        if image_response is not None:
-            src.v1.core.planner.display_image_from_url(image_response)
-
-        # Display each day’s details in a single expander
-        tab_names = [day.split(":")[0] for day in days]
-        with st.container(border=True):
-            if overall_summary_match:
-                tab_names.append("Itinerary Summary")
-                tabs = st.tabs(tab_names)
-            # Loop through tabs and generate content
-            for i, tab in enumerate(tabs[:-1]):
-                with tab:
-                    st.markdown(days[i])
-            with tabs[-1]:
-                st.markdown(overall_summary)
-
-            # todo avoid launching ballons
-            # todo make that only 1 feedback can be given
-            src.v1.widget.rating.render()
-        st.session_state["travel_plan"] = False
-
-        # st.download_button(data=response, label="Download itinerary")
-        # Generate the PDF
-        # pdf_buffer = src.v1.core.pdf.create_pdf(
-        #    title_and_summary, days, overall_summary)
-
-        if st.session_state["steps"]:
-            countries_name = "_".join(
-                st.session_state.steps
-            )  # Join country names with underscores
-            file_name = f"{countries_name}_blinktravel_plan.txt"
-
-        # Provide a download button
-        @st.fragment
-        def download_itinerary():
-            st.download_button(
-                label="Download itinerary",
-                data=response,  # pdf_buffer :TODO WHEN JSON THEN PDF
-                file_name=file_name,
-                # mime="application/pdf",
+        if content != None:
+            title_and_summary, days, overall_summary, overall_summary_match = (
+                src.v1.core.response_processor.response_splitter(response)
             )
 
-        download_itinerary()
+            # Display itinerary summary
+            st.markdown(title_and_summary)
 
-        st.cache_data.clear()
+            if image_response is not None:
+                src.v1.core.planner.display_image_from_url(image_response)
+
+            # Display each day’s details in a single expander
+
+            with st.container(border=True):
+                src.v1.core.response_processor.show_response(
+                    days, overall_summary_match, overall_summary
+                )
+
+                # TODO make that only 1 feedback can be given AND avoid launching ballons
+                src.v1.widget.rating.render()
+
+            st.session_state["travel_plan"] = False
+
+            # st.download_button(data=response, label="Download itinerary")
+            # Generate the PDF
+            # pdf_buffer = src.v1.core.pdf.create_pdf(
+            #    title_and_summary, days, overall_summary)
+
+            if st.session_state["steps"]:
+                countries_name = "_".join(
+                    st.session_state.steps
+                )  # Join country names with underscores
+                file_name = f"{countries_name}_blinktravel_plan.txt"
+
+            # Provide a download button
+            @st.fragment
+            def download_itinerary():
+                st.download_button(
+                    label="Download itinerary",
+                    data=response,  # pdf_buffer :TODO WHEN JSON THEN PDF
+                    file_name=file_name,
+                    # mime="application/pdf",
+                )
+
+            download_itinerary()
+
+            st.cache_data.clear()
 
 
 if __name__ == "__main__":

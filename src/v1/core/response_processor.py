@@ -1,9 +1,11 @@
-import streamlit as st     
+import streamlit as st
 
 # Split the response into sections
 import re
 
+
 def response_splitter(response):
+
     # Extract the title and itinerary summary
     title_and_summary_pattern = re.compile(r"^(.*?)(?=Day 1:)", re.DOTALL)
     title_and_summary_match = title_and_summary_pattern.search(response)
@@ -24,4 +26,17 @@ def response_splitter(response):
     else:
         overall_summary = "Itinerary Summary not found."
 
-    return title_and_summary,days,overall_summary,overall_summary_match
+    return title_and_summary, days, overall_summary, overall_summary_match
+
+
+def show_response(days, overall_summary_match, overall_summary):
+    tab_names = [day.split(":")[0] for day in days]
+    if overall_summary_match:
+        tab_names.append("Itinerary Summary")
+        tabs = st.tabs(tab_names)
+        # Loop through tabs and generate content
+        for i, tab in enumerate(tabs[:-1]):
+            with tab:
+                st.markdown(days[i])
+        with tabs[-1]:
+            st.markdown(overall_summary)
