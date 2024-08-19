@@ -4,7 +4,7 @@ import os
 import sys
 import src
 from pages import *
-from src.v1.core import response_processor
+
 
 # The following line allows using absolute imports relative to "src"
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -22,7 +22,7 @@ st.subheader("Blink Travel Blog", anchor=False)
 st.write("Explore the unique travel plans created by Blink Travel")
 
 # Path to the directory containing the itinerary files
-directory_path = r"src/v1/pages"
+directory_path = r"src/v1/travels"
 
 # Get a list of all .txt files in the directory
 files = [f for f in os.listdir(directory_path) if f.endswith(".txt")]
@@ -63,7 +63,10 @@ else:
 
 
 nav_planner = st.button(
-    "Create Your personal travel plan", type="primary", use_container_width=True
+    "Create Your personal travel plan",
+    type="primary",
+    use_container_width=True,
+    key="nav_planner_blog",
 )
 if nav_planner:
     st.switch_page("Planner.py")
