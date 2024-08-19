@@ -3,8 +3,8 @@ from PIL import Image
 import os
 import sys
 from pages import *
-from src import v1
-from v1.core import response_processor
+
+import src
 
 
 # The following line allows using absolute imports relative to "src"
@@ -40,7 +40,9 @@ def blog():
                 with open(itinerary_path, "r", encoding="utf-8") as file:
                     itinerary_content = file.read()
                     title_and_summary, days, overall_summary, overall_summary_match = (
-                        v1.core.response_processor.response_splitter(itinerary_content)
+                        src.v1.core.response_processor.response_splitter(
+                            itinerary_content
+                        )
                     )
                     with st.expander(title_and_summary, expanded=True):
 
@@ -51,7 +53,7 @@ def blog():
                             use_column_width=True,
                         )
 
-                        v1.core.response_processor.show_response(
+                        src.v1.core.response_processor.show_response(
                             days, overall_summary_match, overall_summary
                         )
             except FileNotFoundError:
