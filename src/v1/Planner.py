@@ -62,7 +62,6 @@ def run():
     logo_pic = Image.open(logo)
     st.sidebar.write("Welcome to the travel planner !")
     st.sidebar.image(logo_pic)
-    st.sidebar.write(st.session_state)
 
     # RENDER FORM AND SUBMIT
     content, picture = form.render_form()

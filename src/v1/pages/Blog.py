@@ -18,6 +18,7 @@ st.sidebar.write("Welcome to the travel blog ")
 st.sidebar.image(logo_pic)
 
 
+
 st.subheader("Blink Travel Blog", anchor=False)
 st.write("Explore the unique travel plans created by Blink Travel")
 
@@ -65,3 +66,5 @@ else:
 nav_planner = st.button(
     "Create Your personal travel plan", type="primary", use_container_width=True
 )
+if nav_planner:
+    st.switch_page("Planner.py")
