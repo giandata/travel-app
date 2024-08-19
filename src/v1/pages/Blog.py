@@ -18,7 +18,6 @@ st.sidebar.write("Welcome to the travel blog ")
 st.sidebar.image(logo_pic)
 
 
-
 st.subheader("Blink Travel Blog", anchor=False)
 st.write("Explore the unique travel plans created by Blink Travel")
 

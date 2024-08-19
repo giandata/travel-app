@@ -35,6 +35,7 @@ def check_password():
         return True
 
     # Show input for password.
+    st.write("Insert Password to create a custom travel Plan")
     st.text_input(
         "Password", type="password", on_change=password_entered, key="password"
     )
@@ -64,7 +65,7 @@ def run():
     st.sidebar.image(logo_pic)
 
     # RENDER FORM AND SUBMIT
-    content, picture = form.render_form()
+    content, picture, loading = form.render_form()
 
     # TRAVEL CREATION
     if content != None:
@@ -72,7 +73,6 @@ def run():
         response = src.v1.core.planner.make_plan(client, content)
         st.session_state["travel_plan"] = True
         st.balloons()
-        st.success("Travel plan is ready!", icon="✈️")
 
     # TRAVEL PIC CREATION
     image_response = None
@@ -82,6 +82,8 @@ def run():
         )
 
     if st.session_state["travel_plan"]:
+        loading.empty()
+        st.success("Travel plan is ready!", icon="✈️")
 
         if content != None:
             title_and_summary, days, overall_summary, overall_summary_match = (

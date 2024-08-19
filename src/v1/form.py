@@ -79,4 +79,4 @@ def render_form():
                     overnight_transfers=overnight_transfers,
                     traveler_type=traveler_type,
                 )
-        return content, picture
+        return content, picture, loading
