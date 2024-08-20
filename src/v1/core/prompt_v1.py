@@ -65,7 +65,8 @@ def fill_script(
             -If any must be skipped due to time constraints, explain why and prioritize the closest and most significant destinations based on the traveler's preferences.
 
 **6. Itinerary Output:**
- - Ensure the output is clearly structured with distinct sections, bullet points, and easy-to-read formatting. Each day's plan should be self-contained and clear, with logical transitions between days.
+ - Ensure the output is clearly structured with distinct sections, bullet points, and easy-to-read formatting.
+   Each day's plan should be self-contained and clear, with logical transitions between days.
    - Start with an **itinerary summary** with a brief, catchy title.
    - Structure the itinerary with a daily plan, each day titled with bold characters and an emoji. Do not use emoji of flags.
    - Provide a detailed description for each place, including activities, accommodation, and transportation.
@@ -73,5 +74,5 @@ def fill_script(
    - End with a **Travel Summary** covering costs, transfers, and additional suggestions regarding clothing and equipment.
      - Explain here why a destination was eventually skipped or why the travel is shorter than {duration} days.
 
-Ensure the final itinerary meets the exact duration of {duration} days, the exact {selected_countries} and {travel_pace} and that it is optimized for time, distance, and the travel preferences provided.
+Ensure the final itinerary meets the exact duration of {duration} days, the exact {selected_countries} and {travel_pace} travel_pace and that it is optimized for time, distance, and the travel preferences provided.
  """
