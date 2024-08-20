@@ -67,7 +67,7 @@ def fill_script(
 **6. Itinerary Output:**
  - Ensure the output is clearly structured with distinct sections, bullet points, and easy-to-read formatting. Each day's plan should be self-contained and clear, with logical transitions between days.
    - Start with an **itinerary summary** with a brief, catchy title.
-   - Structure the itinerary with a daily plan, each day titled with bold characters and an emoji.
+   - Structure the itinerary with a daily plan, each day titled with bold characters and an emoji. Do not use emoji of flags.
    - Provide a detailed description for each place, including activities, accommodation, and transportation.
       -  Be verbose: you can provide some details about accomodation, traditional meals, transportation or activities. 
    - End with a **Travel Summary** covering costs, transfers, and additional suggestions regarding clothing and equipment.
