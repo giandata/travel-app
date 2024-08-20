@@ -9,9 +9,9 @@ def make_plan(client, content):
         model="gpt-4o-mini",
         # response_format={ "type": "json_object" },
         messages=[{"role": "system", "content": content}],
-        temperature=0.5,
+        temperature=0.6,
         max_tokens=1200,
-        top_p=0.1,
+        top_p=0.2,
         frequency_penalty=0.2,
         presence_penalty=0,
     )
@@ -25,13 +25,15 @@ def create_image(client, selected_countries, activities):
         # Ensure selected_countries is a string if it's a list
         if isinstance(selected_countries, list):
             selected_countries = ", ".join(selected_countries)
-        if isinstance(activities, list):
-            activities = ", ".join(activities)
+        if isinstance(activities, list) and activities:
+            activity = activities[0]  # Take the first activity from the list
+        else:
+            activity = activities  # If it's not a list, just use the value directly
 
         # Generate the image using the provided parameters
         image_response = client.images.generate(
             model="dall-e-3",
-            prompt=f"Cinematic travel picture in {selected_countries} recalling {activities} activities",
+            prompt=f"Cinematic travel picture in {selected_countries} recalling {activity} activities",
             size="1024x1024",
             quality="standard",
             n=1,
