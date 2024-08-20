@@ -47,7 +47,8 @@ def travel_activities():
         label_visibility="visible",
         help="Required",
     )
-    return activities
+    st.session_state["travel_activities"] = activities
+    return st.session_state["travel_activities"]
 
 
 def travel_pace():
