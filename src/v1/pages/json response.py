@@ -6,6 +6,10 @@ from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
 import form
 from openai import OpenAI
 
+from src.v1.Planner import check_password
+
+if not check_password():
+    st.stop()
 
 content, picture, loading = form.render_form()
 
