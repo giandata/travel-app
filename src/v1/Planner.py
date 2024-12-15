@@ -69,7 +69,8 @@ def run():
 
     # TRAVEL CREATION
     if content != None:
-        client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
+        client = openai.api_key = st.secrets["OPENAPI_API_KEY"]
+        # OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
         response = src.v1.core.planner.make_plan(client, content)
         st.session_state["travel_plan"] = True
 
