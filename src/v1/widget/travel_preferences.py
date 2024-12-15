@@ -4,7 +4,7 @@ from lists import price_ranges
 
 def traveler_type():
     traveler_type = st.radio(
-        label="Traveler type:",
+        label="**Traveler type:**",
         options=[
             "Solo Traveler",
             "Couple",
@@ -12,7 +12,7 @@ def traveler_type():
             "Group of friends",
         ],
         index=None,
-        help="Optional",
+        help="Optional setting for optimized travel based on traveler type",
         key="traveler_type",
     )
 
@@ -21,10 +21,10 @@ def traveler_type():
 
 def accomodation():
     accomodation = st.pills(
-        label="Preferred accomodation",
+        label="**Preferred accomodation**",
         options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
         selection_mode="multi",
-        help="Optional",
+        help="Optional setting for preferred accomodation",
         key="accomodation",
     )
     return accomodation
@@ -32,10 +32,10 @@ def accomodation():
 
 def preferred_transport():
     transportation = st.pills(
-        label="Select the transportation preferences",
+        label="**Select the transportation preferences**",
         options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
         selection_mode="multi",
-        help="Optional",
+        help="Optional setting for selecting preferred transportation",
         key="transportation",
     )
     return transportation
@@ -44,18 +44,17 @@ def preferred_transport():
 def night_transfers():
     overnight_transfers = st.checkbox(
         label="Look for overnight transfers",
-        help="Optional",
+        help="Optional setting for researching overnight transfers",
         key="night_transfers",
     )
     return overnight_transfers
 
 
 def budget():
-    st.write("Budget Settings")
     price_range = st.select_slider(
-        label="Provide an indicative price range (€)",
+        label="**Provide an indicative budget range (€)**",
         options=price_ranges,
-        help="Specify the travel budget to organize a travel that best suits you",
+        help="Optional setting for optimization of the travel plan based on budget preferences",
         key="budget",
     )
     return price_range

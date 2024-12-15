@@ -1,11 +1,28 @@
 import streamlit as st
 
+
+def travel_pace():
+    travel_pace = st.radio(
+        label="**Select the travel pace**",
+        options=["Static", "Relaxed", "Moderate", "Fast-paced"],
+        index=None,
+        help="How often you would like to change destinations during your trip. This will help us plan your travel pace",
+        key="travel_pace",
+        horizontal=True,
+    )
+    return travel_pace
+
+
 toggles = {
-    "Historical and cultural": False,
-    "Nature and landscapes": False,
-    "Social and local events": False,
-    "Food Lover": False,
-    "Relax and wellness": False,
+    "City sightseeing": False,
+    "Cultural and Historic": False,
+    "Hiking and Nature": False,
+    "Social and Events": False,
+    "Local cuisine": False,
+    "Relax and Wellness": False,
+    "Concerts and Festivale": False,
+    "Locals experience": False,
+    "Hidden Gems": False,
 }
 
 
@@ -31,7 +48,7 @@ def render_toggle():
 
 def travel_activities():
     activities = st.pills(
-        label="Choose at least 1 type of activity",
+        label="**Choose at least 1 type of activity**",
         options=[
             "City sightseeing",
             "Cultural and Historic",
@@ -41,6 +58,7 @@ def travel_activities():
             "Social and Events",
             "Concerts and Festivals",
             "Locals experience",
+            "Hidden Gems",
         ],
         selection_mode="multi",
         default=None,
@@ -50,15 +68,3 @@ def travel_activities():
     )
     st.session_state["travel_activities"] = activities
     return st.session_state["travel_activities"]
-
-
-def travel_pace():
-    travel_pace = st.radio(
-        label="Select the travel pace",
-        options=["Static", "Relaxed", "Moderate", "Fast-paced"],
-        index=None,
-        help="How often you would like to change destinations during your trip. This will help us plan your travel pace",
-        key="travel_pace",
-        horizontal=True,
-    )
-    return travel_pace

@@ -28,11 +28,10 @@ def render_form():
         st.subheader("What is your travel style?", anchor=False)
 
         travel_pace = travel_type.travel_pace()  # required
-       
+
         travel_activities = travel_type.travel_activities()  # required
-        
-            
-        with st.expander("Provide more details for your customized travel plan"):
+
+        with st.expander("**Provide more details for your customized travel plan**"):
             traveler_type = travel_preferences.traveler_type()
             accomodation = travel_preferences.accomodation()
             transportation = travel_preferences.preferred_transport()
