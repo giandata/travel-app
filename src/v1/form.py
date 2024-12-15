@@ -34,9 +34,12 @@ def render_form():
         with st.expander("**Provide more details for your customized travel plan**"):
             traveler_type = travel_preferences.traveler_type()
             accomodation = travel_preferences.accomodation()
+            st.divider()
             transportation = travel_preferences.preferred_transport()
             overnight_transfers = travel_preferences.night_transfers()
+            st.divider()
             price_range = travel_preferences.budget()
+            st.divider()
             picture = st.checkbox(
                 label="Generate AI picture",
                 value=False,
