@@ -16,6 +16,8 @@ if project_root not in sys.path:
 # Absolutely importing src requires the workspace root to be set (see project_root)
 import src
 
+st.session_state["travel_plan"] = None
+
 
 # LOGIN
 def check_password():
