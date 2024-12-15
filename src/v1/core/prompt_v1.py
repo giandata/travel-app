@@ -20,19 +20,19 @@ def fill_script(
 
 **1. Destinations and Duration:**
    - Countries to visit: {selected_countries}.
-   - The trip must last exactly {duration} days. This duration is non-negotiable, and all days must be fully utilized.
+   - The travel duration range in days is of {duration} days. This duration range is non-negotiable.
    - Start the trip on the provided departure date: {date}.
 
 **2. Route Optimization:**
    - Optimize the travel route to minimize time and travel distances.
-   - **All selected countries ({selected_countries}) must be visited unless it is impossible to fit within the {duration} days.
+   - **All selected countries ({selected_countries}) must be visited unless it is unreasonable to fit within the trip duration.
         - ** Prioritize geographically closer countries and ensure the route covers all countries unless explicitly stated otherwise.
    - If absolutely necessary, skip the furthest country, but explain why this decision was made.
 
 **3. Budget and Transportation:**
 - Where possible, 
 
-   - Use a budget of {price_range}, but ensure it fits within the given {duration} days.
+   - Use a budget of {price_range}, but ensure it fits within the given duration range.
    - The budget is flexible to ensure all destinations are included within the {duration} days.
    - Transportation preference: {transportation}.
    - Prioritize transportation options that align with the transportation preference and the {travel_pace}  travel pace, minimizing time spent in transit. 
@@ -47,10 +47,11 @@ def fill_script(
      - You can propose a variable number of activities in each day, when travels consist of several days.
      - Take into account how much time it takes to get to place and how long it takes in average to complete the activity.
      - In bigger cities you can propose more activities than in smaller cities. 
-   - Travel pace: {travel_pace}. 
-     - Relaxed: 2 activities/day.
-     - Moderate: 3-4 activities/day.
-     - Fast-paced: 4+ activities/day.
+   - Travel pace: {travel_pace}.
+     - Static: no transfers or change of city are to be proposed. 
+     - Relaxed: transfer or change of city every 3 to 4 days and propose at most 2 activities/day.
+     - Moderate: transfer or change of city every 2 to 3 days and 3-4 activities/day.
+     - Fast-paced: transfer or change of city every 1 to 2 days and 3-4 activities/day.4+ activities/day.
    - Include a maximum of 2 cities per day, regardless of pace.
    - Propose the activities based on the traveler’s type: {traveler_type}.
 
@@ -60,7 +61,6 @@ def fill_script(
         - Prioritize indoor activities for colder seasons (fall/winter) and outdoor activities for warmer seasons (spring/summer).
    
 **Priority:**
-   - The trip must last exactly {duration} days. This is a non-negotiable requirement.
     - The selected countries ({selected_countries}) are the primary destinations. 
             -If any must be skipped due to time constraints, explain why and prioritize the closest and most significant destinations based on the traveler's preferences.
 
@@ -74,5 +74,5 @@ def fill_script(
    - End with a **Travel Summary** covering costs, transfers, and additional suggestions regarding clothing and equipment.
      - Explain here why a destination was eventually skipped or why the travel is shorter than {duration} days.
 
-Ensure the final itinerary meets the exact duration of {duration} days, the exact {selected_countries} and {travel_pace} travel_pace and that it is optimized for time, distance, and the travel preferences provided.
+Ensure the final itinerary duration meets the requirement of {duration} days, the exact {selected_countries} and {travel_pace} travel_pace and that it is optimized for time, distance, and the travel preferences provided.
  """

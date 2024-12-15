@@ -26,12 +26,12 @@ def render_form():
             duration = departure.travel_duration()
         st.divider()
         st.subheader("What is your travel style?", anchor=False)
-        col1, col2 = st.columns(2, gap="large")
-        with col1:
-            st.write("Select the type of activities for your travel (required):")
-            travel_activities = travel_type.travel_activities()  # required
-        with col2:
-            travel_pace = travel_type.travel_pace()  # required
+
+        travel_pace = travel_type.travel_pace()  # required
+       
+        travel_activities = travel_type.travel_activities()  # required
+        
+            
         with st.expander("Provide more details for your customized travel plan"):
             traveler_type = travel_preferences.traveler_type()
             accomodation = travel_preferences.accomodation()

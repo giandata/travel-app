@@ -20,10 +20,10 @@ def traveler_type():
 
 
 def accomodation():
-    accomodation = st.radio(
+    accomodation = st.pills(
         label="Preferred accomodation",
         options=["Hotel", "Vacation Rental", "Hostels", "Camping"],
-        index=None,
+        selection_mode="multi",
         help="Optional",
         key="accomodation",
     )
@@ -31,9 +31,10 @@ def accomodation():
 
 
 def preferred_transport():
-    transportation = st.multiselect(
+    transportation = st.pills(
         label="Select the transportation preferences",
         options=["Flights", "Train", "Car rental", "Public Transport", "Ferry"],
+        selection_mode="multi",
         help="Optional",
         key="transportation",
     )

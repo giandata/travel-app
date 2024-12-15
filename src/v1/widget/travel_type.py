@@ -30,8 +30,8 @@ def render_toggle():
 
 
 def travel_activities():
-    activities = st.multiselect(
-        label="select up to 4 types of activities",
+    activities = st.pills(
+        label="Choose at least 1 type of activity",
         options=[
             "City sightseeing",
             "Cultural and Historic",
@@ -42,8 +42,9 @@ def travel_activities():
             "Concerts and Festivals",
             "Locals experience",
         ],
-        max_selections=4,
-        placeholder="Choose at least 1 type of activity",
+        selection_mode="multi",
+        default=None,
+        key="travel activities",
         label_visibility="visible",
         help="Required",
     )
@@ -54,9 +55,9 @@ def travel_activities():
 def travel_pace():
     travel_pace = st.radio(
         label="Select the travel pace",
-        options=["Relaxed", "Moderate", "Fast-paced"],
+        options=["Static", "Relaxed", "Moderate", "Fast-paced"],
         index=None,
-        help="Required",
+        help="How often you would like to change destinations during your trip. This will help us plan your travel pace",
         key="travel_pace",
         horizontal=True,
     )

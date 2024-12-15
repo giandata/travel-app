@@ -20,6 +20,7 @@ def departure_date():
 def travel_duration():
     duration = st.slider(
         label="How many days you want to travel?",
+        value=(0, 10),
         min_value=1,
         max_value=10,
         step=1,
