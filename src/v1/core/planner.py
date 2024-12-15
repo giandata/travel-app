@@ -1,3 +1,4 @@
+import openai
 import streamlit as st
 import requests
 from PIL import Image
@@ -5,18 +6,22 @@ from io import BytesIO
 
 
 def make_plan(client, content):
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        # response_format={ "type": "json_object" },
-        messages=[{"role": "system", "content": content}],
-        temperature=0.6,
-        max_tokens=1200,
-        top_p=0.2,
-        frequency_penalty=0.2,
-        presence_penalty=0,
-    )
-    response = response.choices[0].message.content
-    return response
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            # response_format={ "type": "json_object" },
+            messages=[{"role": "system", "content": content}],
+            temperature=0.6,
+            max_tokens=1200,
+            top_p=0.2,
+            frequency_penalty=0.2,
+            presence_penalty=0,
+        )
+        response = response.choices[0].message.content
+        return response
+    except Exception as e:
+        st.error(f"Error Occurred: {e}")
+        return None
 
 
 def create_image(client, selected_countries, activities):

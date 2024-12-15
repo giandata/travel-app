@@ -69,8 +69,7 @@ def run():
 
     # TRAVEL CREATION
     if content != None:
-        client = openai.api_key = st.secrets["OPENAPI_API_KEY"]
-        # OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
+        client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
         response = src.v1.core.planner.make_plan(client, content)
         st.session_state["travel_plan"] = True
 
@@ -79,7 +78,7 @@ def run():
     if picture:
         selected_countries = st.session_state.get("selected_countries", [])
         activities = st.session_state.get("travel_activities", [])
-        # client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"]) outdated
+        client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
         import openai
 
         openai.api_key = st.secrets["OPENAPI_API_KEY"]
@@ -88,7 +87,7 @@ def run():
             client, selected_countries, activities
         )
 
-    if st.session_state["travel_plan"]:
+    if st.session_state["travel_plan"] is not None:
         loading.empty()
         st.balloons()
         st.success("Travel plan is ready!", icon="✈️")
