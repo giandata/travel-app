@@ -18,6 +18,7 @@ def make_plan(client, content):
             presence_penalty=0,
         )
         response = response.choices[0].message.content
+        # st.balloons()
         return response
     except Exception as e:
         st.error(f"Error Occurred: {e}")

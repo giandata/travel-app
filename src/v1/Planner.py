@@ -91,7 +91,6 @@ def run():
 
     if st.session_state["travel_plan"] is not None:
         loading.empty()
-        st.balloons()
         st.success("Travel plan is ready!", icon="✈️")
 
         if content != None:
