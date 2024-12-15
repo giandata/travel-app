@@ -54,7 +54,7 @@ if not check_password():
 def run():
     st.cache_data.clear()
     st.title("BlinkTravel App🛤️", anchor=False)
-    st.header("Tell the Engine about your dream travel, he will plan it for you!")
+    st.subheader("Tell the Engine about your dream travel, he will plan it for you!")
     st.divider()
 
     if "travel_plan" not in st.session_state:
