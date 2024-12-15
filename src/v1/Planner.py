@@ -78,7 +78,11 @@ def run():
     if picture:
         selected_countries = st.session_state.get("selected_countries", [])
         activities = st.session_state.get("travel_activities", [])
-        client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
+        # client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"]) outdated
+        import openai
+
+        openai.api_key = st.secrets["OPENAPI_API_KEY"]
+
         image_response = src.v1.core.planner.create_image(
             client, selected_countries, activities
         )
