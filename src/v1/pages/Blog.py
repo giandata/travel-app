@@ -44,7 +44,7 @@ else:
 
                     st.image(
                         image,
-                        use_column_width=True,
+                        use_container_width=True,
                     )
 
                     src.v1.core.response_processor.show_response(
