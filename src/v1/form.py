@@ -10,7 +10,7 @@ def render_form():
     loading = None  # Initialize loading to None
     picture = None  # Initialize picture to None
 
-    with st.form(key="input_form", clear_on_submit=True, border=False):
+    with st.form(key="input_form", clear_on_submit=False, border=False):
         st.subheader("Where do you want to travel?", anchor=False)
         st.markdown(
             "Which European countries do you want to travel to? Select up to 5 countries"
