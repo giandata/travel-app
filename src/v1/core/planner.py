@@ -11,11 +11,12 @@ def make_plan(client, content):
             model="gpt-4o-mini",
             # response_format={ "type": "json_object" },
             messages=[{"role": "system", "content": content}],
-            temperature=0.6,
-            max_tokens=1200,
-            top_p=0.2,
-            frequency_penalty=0.2,
-            presence_penalty=0,
+            ## add user message
+            temperature=0.8,  # (0-1) Controls the randomness or creativity of the model's responses.A higher value (e.g., 0.8) introduces more randomness and creativity in the responses.
+            max_tokens=1500,
+            top_p=0.3,  # Controls the diversity of the output by sampling from the top p percentage of possible next tokens.A value of 0.2 means the model will sample from the top 20% of possible next tokens, leading to more focused and deterministic output.(0-1)
+            frequency_penalty=0.5,  # (-2,+2)Reduces the likelihood of the model repeating the same phrases or tokens.
+            presence_penalty=-0.5,  # (-2,+2) Encourages or discourages the model from mentioning new concepts that haven't been mentioned in the conversation so far.Negative values (e.g., -1.0) would encourage the model to introduce new ideas or topics in the conversation.
         )
         response = response.choices[0].message.content
         # st.balloons()
