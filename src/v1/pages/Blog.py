@@ -38,8 +38,8 @@ else:
                 title_and_summary, days, overall_summary, overall_summary_match = (
                     src.v1.core.response_processor.response_splitter(itinerary_content)
                 )
-                with st.expander(title_and_summary, expanded=True):
-
+                with st.expander(label="Custom itinerary", expanded=True):
+                    st.subheader(title_and_summary)
                     image = Image.open(image_path)
 
                     st.image(
