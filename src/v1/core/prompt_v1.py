@@ -1,5 +1,6 @@
 def fill_script(
     selected_countries,
+    starting_city,
     duration,
     date,
     night_jets,
@@ -9,7 +10,7 @@ def fill_script(
     **kwargs,
 ):
     travel_activities = ", ".join(travel_activities)
-
+    starting_city = ", ".join(starting_city)
     overnight_transfers = kwargs.get("overnight_transfers", None)
     transportation = kwargs.get("transportation", None)
     traveler_type = kwargs.get("traveler_type", None)
@@ -20,6 +21,7 @@ def fill_script(
 
 **1. Destinations and Duration:**
    - Countries to visit: {selected_countries}.
+   - Starting city: {starting_city}
    - The travel duration range in days is of {duration} days. This duration range is non-negotiable.
    - Start the trip on the provided departure date: {date}.
 

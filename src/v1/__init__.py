@@ -1,1 +1,1 @@
-from . import core, widget, form, travels
+from . import core, travel_settings, widget, travels

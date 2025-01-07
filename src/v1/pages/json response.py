@@ -3,7 +3,7 @@ import json
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts.chat import ChatPromptTemplate
 from langchain.output_parsers.openai_functions import JsonOutputFunctionsParser
-import form
+import src.v1.travel_settings as travel_settings
 from openai import OpenAI
 
 from src.v1.Planner import check_password
@@ -11,7 +11,7 @@ from src.v1.Planner import check_password
 if not check_password():
     st.stop()
 
-content, picture, loading = form.render_form()
+content, picture, loading = travel_settings.render_form()
 
 if content != None:
     loading.empty()

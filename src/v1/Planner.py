@@ -5,7 +5,7 @@ from lists import *
 import hmac
 from openai import OpenAI
 from PIL import Image
-import form
+import travel_settings
 from widget import travel_type, destination
 
 # The following line allows using absolute imports relative to "src"
@@ -67,7 +67,7 @@ def run():
     st.sidebar.image(logo_pic)
 
     # RENDER FORM AND SUBMIT
-    content, picture, loading = form.render_form()
+    content, picture, loading = travel_settings.travel_input()
 
     # TRAVEL CREATION
     if content != None:
