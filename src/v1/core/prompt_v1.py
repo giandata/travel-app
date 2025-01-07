@@ -21,13 +21,14 @@ def fill_script(
 
 **1. Destinations and Duration:**
    - Countries to visit: {selected_countries}.
-   - Starting city: {starting_city}
+   - Starting city: {starting_city}. This starting point is non-negotiable.
    - The travel duration range in days is of {duration} days. This duration range is non-negotiable.
    - Start the trip on the provided departure date: {date}.
 
 **2. Route Optimization:**
    - Optimize the travel route to minimize time and travel distances.
    - **All selected countries ({selected_countries}) must be visited unless it is unreasonable to fit within the trip duration.
+        - start the travel from the selected city, if provided.
         - ** Prioritize geographically closer countries and ensure the route covers all countries unless explicitly stated otherwise.
    - If absolutely necessary, skip the furthest country, but explain why this decision was made.
 
@@ -65,6 +66,7 @@ def fill_script(
 **Priority:**
     - The selected countries ({selected_countries}) are the primary destinations. 
             -If any must be skipped due to time constraints, explain why and prioritize the closest and most significant destinations based on the traveler's preferences.
+    - The starting city ({starting_city}) is the first place to be visited.
 
 **6. Itinerary Output:**
  - Ensure the output is clearly structured with distinct sections, bullet points, and easy-to-read formatting.
