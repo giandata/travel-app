@@ -10,7 +10,11 @@ def fill_script(
     **kwargs,
 ):
     travel_activities = ", ".join(travel_activities)
-    starting_city = ", ".join(starting_city)
+    starting_city = (
+        ", ".join(starting_city)
+        if isinstance(starting_city, (list, tuple))
+        else starting_city or ""
+    )
     overnight_transfers = kwargs.get("overnight_transfers", None)
     transportation = kwargs.get("transportation", None)
     traveler_type = kwargs.get("traveler_type", None)

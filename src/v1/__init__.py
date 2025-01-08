@@ -1,1 +1,2 @@
-from . import core, travel_settings, widget, travels
+from .widget import travel_settings
+from . import core, widget, travels

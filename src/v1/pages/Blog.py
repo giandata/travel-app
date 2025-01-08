@@ -11,7 +11,7 @@ if project_root not in sys.path:
 import src
 
 # sidebar
-logo = "logo.png"
+logo = "logo1.png"
 logo_pic = Image.open(logo)
 st.sidebar.write("Welcome to the travel blog ")
 st.sidebar.image(logo_pic)
@@ -60,10 +60,19 @@ else:
             st.error(f"An unexpected error occurred: {e}")
 
 nav_planner = st.button(
-    "Create Your personal travel plan",
+    "Create Your personal Travel Plan",
     type="primary",
     use_container_width=True,
     key="nav_planner_blog",
 )
 if nav_planner:
     st.switch_page("Planner.py")
+
+nav_planner2 = st.button(
+    "Check out our Travel guides",
+    type="primary",
+    use_container_width=True,
+    key="nav_planner_guide",
+)
+if nav_planner2:
+    st.switch_page("Pages/Guides.py")

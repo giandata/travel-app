@@ -5,7 +5,7 @@ from lists import *
 import hmac
 from openai import OpenAI
 from PIL import Image
-import travel_settings
+import src.v1.widget.travel_settings as travel_settings
 from widget import travel_type, destination
 
 # The following line allows using absolute imports relative to "src"
@@ -61,7 +61,7 @@ def run():
         st.session_state["travel_plan"] = None
 
     # sidebar
-    logo = "logo.png"
+    logo = "logo1.png"
     logo_pic = Image.open(logo)
     st.sidebar.write("Welcome to the travel planner !")
     st.sidebar.image(logo_pic)
@@ -113,12 +113,9 @@ def run():
             st.session_state["travel_plan"] = False
 
             if st.session_state["steps"]:
-                countries_name = "_".join(
-                    st.session_state.steps
-                )  
+                countries_name = "_".join(st.session_state.steps)
                 file_name = f"{countries_name}_blinktravel_plan.txt"
 
-            
             @st.fragment
             def download_itinerary():
                 st.download_button(
@@ -129,6 +126,15 @@ def run():
                 )
 
             download_itinerary()
+
+            nav_planner3 = st.button(
+                "Check our Practical Tourist Guides",
+                type="primary",
+                use_container_width=True,
+                key="nav_planner_blog",
+            )
+            if nav_planner3:
+                st.switch_page("Pages/Guides.py")
 
             st.cache_data.clear()
 
