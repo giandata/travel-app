@@ -5,8 +5,7 @@ from lists import *
 import hmac
 from openai import OpenAI
 from PIL import Image
-import src.v1.widget.travel_settings as travel_settings
-from widget import travel_type, destination
+from widget import travel_settings
 
 # The following line allows using absolute imports relative to "src"
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
@@ -63,8 +62,12 @@ def run():
     # sidebar
     logo = "logo1.png"
     logo_pic = Image.open(logo)
-    st.sidebar.write("Welcome to the travel planner !")
+    st.sidebar.write("**Welcome to the travel planner !**")
     st.sidebar.image(logo_pic)
+    st.sidebar.markdown(
+        "<h3 style='font-size:28px; text-align:center;'>Follow us on Socials 📸 <a href='https://www.instagram.com/blinktravel_/'>here</a></h3>",
+        unsafe_allow_html=True,
+    )
 
     # RENDER FORM AND SUBMIT
     content, picture, loading = travel_settings.travel_input()
@@ -127,7 +130,9 @@ def run():
 
             download_itinerary()
 
-            st.link_button("Check our Practical Tourist Guides", "Pages/Guides.py")
+            st.page_link(
+                "Pages/Guides.py", label="Check our Practical Tourist Guides", icon="1️⃣"
+            )
 
             st.cache_data.clear()
 

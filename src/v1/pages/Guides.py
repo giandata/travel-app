@@ -18,6 +18,10 @@ logo = "logo1.png"
 logo_pic = Image.open(logo)
 st.sidebar.write("Welcome to the travel guide shop ")
 st.sidebar.image(logo_pic)
+st.sidebar.markdown(
+    "<h3 style='font-size:28px; text-align:center;'>Follow us on Socials 📸 <a href='https://www.instagram.com/blinktravel_/'>here</a></h3>",
+    unsafe_allow_html=True,
+)
 
 st.subheader("Blink Travel Shop", anchor=False)
 st.subheader("The Practical Tourist guide collection")
@@ -71,7 +75,7 @@ cover_munic = "munich cover.png"
 cover_munic_pic = Image.open(cover_munic)
 st.image(cover_munic)
 
-st.write_stream(stream_text(book_index))
+st.write(book_index)
 
 col_1, col_2 = st.columns(2)
 with col_1:

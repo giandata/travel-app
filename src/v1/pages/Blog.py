@@ -13,8 +13,12 @@ import src
 # sidebar
 logo = "logo1.png"
 logo_pic = Image.open(logo)
-st.sidebar.write("Welcome to the travel blog ")
+st.sidebar.write("**Welcome to our travel blog !**")
 st.sidebar.image(logo_pic)
+st.sidebar.markdown(
+    "<h3 style='font-size:28px; text-align:center;'>Follow us on Socials 📸 <a href='https://www.instagram.com/blinktravel_/'>here</a></h3>",
+    unsafe_allow_html=True,
+)
 
 st.subheader("Blink Travel Blog", anchor=False)
 st.write("Explore the unique travel plans created by Blink Travel")
