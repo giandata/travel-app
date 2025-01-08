@@ -33,7 +33,7 @@ def fill_script(
    - If absolutely necessary, skip the furthest country, but explain why this decision was made.
 
 **3. Budget and Transportation:**
-- Where possible, 
+   - Where possible, 
 
    - Use a budget of {price_range}, but ensure it fits within the given duration range.
    - The budget is flexible to ensure all destinations are included within the {duration} days.

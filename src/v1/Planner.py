@@ -72,7 +72,7 @@ def run():
     # TRAVEL CREATION
     if content != None:
         client = OpenAI(api_key=st.secrets["OPENAPI_API_KEY"])
-        response = src.v1.core.planner.make_plan(client, content)
+        response = src.v1.core.model.make_plan(client, content)
         st.session_state["travel_plan"] = True
 
     # TRAVEL PIC CREATION
@@ -85,7 +85,7 @@ def run():
 
         openai.api_key = st.secrets["OPENAPI_API_KEY"]
 
-        image_response = src.v1.core.planner.create_image(
+        image_response = src.v1.core.model.create_image(
             client, selected_countries, activities
         )
 
@@ -102,14 +102,12 @@ def run():
             st.markdown(title_and_summary)
 
             if image_response is not None:
-                src.v1.core.planner.display_image_from_url(image_response)
+                src.v1.core.model.display_image_from_url(image_response)
             with st.container(border=True):
                 src.v1.core.response_processor.show_response(
                     days, overall_summary_match, overall_summary
                 )
 
-                # Rating widget
-                # TODO make that only 1 feedback can be given AND avoid launching ballons
                 src.v1.widget.rating.render()
 
             st.session_state["travel_plan"] = False
@@ -117,10 +115,10 @@ def run():
             if st.session_state["steps"]:
                 countries_name = "_".join(
                     st.session_state.steps
-                )  # Join country names with underscores
+                )  
                 file_name = f"{countries_name}_blinktravel_plan.txt"
 
-            # Download button
+            
             @st.fragment
             def download_itinerary():
                 st.download_button(

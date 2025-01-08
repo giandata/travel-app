@@ -30,7 +30,7 @@ def city_selection():
             for city in european_cities.get(country, [])
         ]
         starting_city = st.pills(
-            label="**Cities to include in your itinerary**",
+            label="**Select the starting city**",
             options=available_cities,
             key="cities",
             selection_mode="single",

@@ -6,19 +6,16 @@ def travel_input():
     from widget import destination, departure, travel_type, travel_preferences
     from lists import night_jets
 
-    content = None  # Initialize content to None
-    loading = None  # Initialize loading to None
-    picture = None  # Initialize picture to None
-
+    content = None
+    loading = None
+    picture = None
     st.subheader("Where do you want to travel?", anchor=False)
     st.markdown(
         "Which European countries do you want to travel to? Select up to 5 countries"
     )
     selected_countries = destination.country_selection()  # required
-    
-    st.markdown(
-        "In what city do you want to start your travel?"
-    )
+
+    st.markdown("In what city do you want to start your travel?")
     selected_cities = destination.city_selection()  # optional
     st.divider()
 
@@ -36,7 +33,9 @@ def travel_input():
 
     travel_activities = travel_type.travel_activities()  # required
 
-    with st.expander("**Provide more details for your customized travel plan**"):
+    with st.expander(
+        "**Provide more details for your customized travel plan**"
+    ):  # optionals
         traveler_type = travel_preferences.traveler_type()
         accomodation = travel_preferences.accomodation()
         st.divider()

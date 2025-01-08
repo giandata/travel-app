@@ -26,6 +26,5 @@ def travel_duration():
         step=1,
         key="duration",
         help="Select how many days you want to travel",
-        label_visibility="visible",
     )
     return duration
