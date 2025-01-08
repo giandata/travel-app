@@ -57,7 +57,7 @@ book_index = """
 def stream_text(text):
     for word in text.split(" "):
         yield word + " "
-        time.sleep(0.08)
+        time.sleep(0.05)
 
 
 st.write_stream(stream_text(book_description))
@@ -78,4 +78,6 @@ with col_1:
     st.page_link("Planner.py", label="Go to the Planner", icon="1️⃣")
 
 with col_2:
-    st.page_link("Blog.py", label="Go to the Blog", icon="2️⃣")
+    st.page_link("Pages/Blog.py", label="Go to the Blog", icon="2️⃣")
+
+## add instagram page

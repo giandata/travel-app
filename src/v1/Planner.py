@@ -127,14 +127,7 @@ def run():
 
             download_itinerary()
 
-            nav_planner3 = st.button(
-                "Check our Practical Tourist Guides",
-                type="primary",
-                use_container_width=True,
-                key="nav_planner_blog",
-            )
-            if nav_planner3:
-                st.switch_page("Pages/Guides.py")
+            st.link_button("Check our Practical Tourist Guides", "Pages/Guides.py")
 
             st.cache_data.clear()
 
